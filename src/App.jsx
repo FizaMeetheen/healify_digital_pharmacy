@@ -2,8 +2,8 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
-import Products from './pages/Products'
-
+import LandingPage from './pages/LandingPage'
+import Home from './pages/Home'
 
 function App() {
 
@@ -11,9 +11,11 @@ function App() {
     <>
     
      <Routes>
+      <Route path="/" element={<LandingPage/>}/>
+      <Route path="/home" element={<Home/>}/>
       <Route path="/cart" element={<Cart/>}/>
       <Route path="/checkout" element={<Checkout/>}/>
-      <Route path="/products" element={<Products/>}/>
+      
 
 
      
