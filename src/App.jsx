@@ -4,6 +4,8 @@ import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
 import LandingPage from './pages/LandingPage'
 import Home from './pages/Home'
+import Products from './pages/Products'
+
 
 function App() {
 
@@ -15,6 +17,8 @@ function App() {
       <Route path="/home" element={<Home/>}/>
       <Route path="/cart" element={<Cart/>}/>
       <Route path="/checkout" element={<Checkout/>}/>
+      <Route path="/products" element={<Products/>}/>
+
       
 
 
