@@ -84,7 +84,7 @@ const LandingPage = () => {
           <form className="flex flex-col space-y-4">
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Enter Mobile Number"
               className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal-400"
             />
             <input
