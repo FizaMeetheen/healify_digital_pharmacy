@@ -1,10 +1,17 @@
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
+import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
 
 function App() {
 
   return (
     <>
-     <h1 className=' text-red-500 text-9xl'>Welcome</h1>
+    
+     <Routes>
+      <Route path="/cart" element={<Cart/>}/>
+      <Route path="/checkout" element={<Checkout/>}/>
+     </Routes>
     </>
   )
 }
