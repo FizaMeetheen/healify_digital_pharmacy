@@ -9,6 +9,8 @@ import Register from './pages/Register'
 import AdminHome from './pages/adminPages/AdminHome'
 import AdminMedicines from './pages/adminPages/AdminMedicines'
 import AdminUsers from './pages/adminPages/AdminUsers'
+import LabBooking from './pages/LabBooking'
+import AdminLab from './pages/adminPages/AdminLab'
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
       <Route path="/adminHome" element={<AdminHome/>}/>
       <Route path="/adminHome/adminMedicines" element={<AdminMedicines/>}/>
       <Route path="/adminHome/adminUsers" element={<AdminUsers/>}/>
+      <Route path="/labtest" element={<LabBooking/>}/>
+      <Route path="/adminHome/labDetails" element={<AdminLab/>}/>
       
      
      </Routes>

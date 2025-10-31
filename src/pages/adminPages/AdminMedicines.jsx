@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FaArrowLeft, FaCheckCircle } from "react-icons/fa";
 
 const AdminMedicines = () => {
-  const categories = ["Baby Products", "Nutritious", "Ayurvedic", "Capsules"];
+  const categories = ["Personal Care","Nutrition supplements" ,"Ayurvedic Products","Mother and Baby Care"," Eye Care Products" ,"Cold & Cough Products" ,"Health Care Devices" ,"Elderly Care"];
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
