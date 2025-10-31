@@ -6,6 +6,9 @@ import LandingPage from './pages/LandingPage'
 import Home from './pages/Home'
 import Products from './pages/Products'
 import Register from './pages/Register'
+import AdminHome from './pages/adminPages/AdminHome'
+import AdminMedicines from './pages/adminPages/AdminMedicines'
+import AdminUsers from './pages/adminPages/AdminUsers'
 
 
 function App() {
@@ -20,7 +23,9 @@ function App() {
       <Route path="/cart" element={<Cart/>}/>
       <Route path="/checkout" element={<Checkout/>}/>
       <Route path="/products" element={<Products/>}/>
-
+      <Route path="/adminHome" element={<AdminHome/>}/>
+      <Route path="/adminHome/adminMedicines" element={<AdminMedicines/>}/>
+      <Route path="/adminHome/adminUsers" element={<AdminUsers/>}/>
       
      
      </Routes>
