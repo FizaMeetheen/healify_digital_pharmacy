@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 import { FaHeartbeat, FaPills, FaFlask, FaPlus } from "react-icons/fa";
 import healifyLogo from "../assets/logo.png";
 import { Link } from "react-router-dom";
@@ -23,7 +23,7 @@ const FloatingIcon = ({ Icon, xStart, yStart, size, delay }) => (
       ease: "easeInOut",
     }}
   >
-    <Icon/>
+    <Icon />
   </motion.div>
 );
 
@@ -92,12 +92,13 @@ const LandingPage = () => {
               placeholder="Password"
               className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal-400"
             />
+            <Link to={"/home"}>
             <button
               type="submit"
-              className="bg-teal-500 text-white py-3 rounded-lg hover:bg-teal-600 transition-all"
+              className="bg-teal-500 text-white py-3 rounded-lg hover:bg-teal-600 transition-all w-full"
             >
               Login
-            </button>
+            </button></Link>
           </form>
 
           <div className="mt-6 text-center text-gray-600">
