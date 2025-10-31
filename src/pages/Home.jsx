@@ -11,6 +11,8 @@ import eyeCare from "../assets/EC.webp";
 import coughAndCold from "../assets/CC.webp";
 import healthProducts from "../assets/HD.webp";
 import elderlyCare from "../assets/elder.webp";
+import AboutUs from "../components/AboutUs";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const categories = [
@@ -138,32 +140,8 @@ const Home = () => {
           </div>
         </section>
 
-        {/* ABOUT US (Animated) */}
-        <motion.section
-          className="py-20 bg-white flex flex-col md:flex-row items-center justify-between px-8 md:px-20"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-        >
-          <motion.img
-            src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b"
-            alt="About Healify"
-            className="w-full md:w-1/2 rounded-xl shadow-lg"
-          />
-          <div className="md:w-1/2 mt-8 md:mt-0 md:pl-10 space-y-6">
-            <h2 className="text-3xl font-bold text-[#001b73]">About Healify</h2>
-            <p className="text-gray-700 leading-relaxed">
-              Healify is your one-stop online pharmacy designed to make healthcare
-              accessible, affordable, and reliable for everyone. We connect you to
-              genuine medicines, healthcare essentials, and professional guidance —
-              all from the comfort of your home.
-            </p>
-            <button className="bg-[#001b73] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#0033a0] transition-all duration-500">
-              Learn More
-            </button>
-          </div>
-        </motion.section>
+        {/* ABOUT US*/}
+        <AboutUs/>
 
         {/* CUSTOMER REVIEWS (Static) */}
         <section className="py-20 bg-[#001b73] text-white text-center">
@@ -198,6 +176,7 @@ const Home = () => {
           </div>
         </section>
       </div>
+      <Footer/>
     </>
   );
 };
