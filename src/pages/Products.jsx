@@ -29,7 +29,7 @@ const StyledAccordion = styled(Accordion)(({ theme }) => ({
   return (
     <>
       <div>
-        <div className=" w-full shadow-2xl h-70 bg-sky-400 flex justify-center items-center">
+        <div className=" w-full shadow-2xl h-70 bg-radial from-cyan-300 to-cyan-500 flex justify-center items-center">
           <h1 className="text-5xl font-bold text-white">Products</h1>
         </div>
         <div className="w-auto mx-5">
