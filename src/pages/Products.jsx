@@ -15,6 +15,7 @@ import Masonry from '@mui/lab/Masonry';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
+import Header from "../components/Header";
 
 function Products() {
     const heights = [ 50];
@@ -28,6 +29,7 @@ const StyledAccordion = styled(Accordion)(({ theme }) => ({
 }));
   return (
     <>
+    <Header/>
       <div>
         <div className=" w-full shadow-2xl h-70 bg-radial from-cyan-300 to-cyan-500 flex justify-center items-center">
           <h1 className="text-5xl font-bold text-white">Products</h1>
