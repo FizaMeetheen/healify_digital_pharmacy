@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -16,9 +16,35 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Header from "../components/Header";
+import { getMedicineAPI } from "../service/allAPI";
+import { useEffect } from "react";
 
 function Products() {
     const heights = [ 50];
+
+ const [medicines, setmedicines] = useState([]);   
+
+const getAllMedicines = async()=>{
+try{
+  const result = await getMedicineAPI()
+
+  if(result.status>=200 &&result.status<300){
+    setmedicines(result.data)
+  }
+
+}catch(err){
+  console.error("error fetching medicines",err)
+
+}
+  
+}
+useEffect(()=>{
+  getAllMedicines()
+},[])
+
+
+
+
 
 const StyledAccordion = styled(Accordion)(({ theme }) => ({
   backgroundColor: '#fff',
@@ -27,6 +53,10 @@ const StyledAccordion = styled(Accordion)(({ theme }) => ({
     backgroundColor: '#1A2027',
   }),
 }));
+
+
+
+
   return (
     <>
     <Header/>
@@ -62,29 +92,32 @@ const StyledAccordion = styled(Accordion)(({ theme }) => ({
         ))}
       </Masonry>
     </Box>
-            </Grid>
+  </Grid>
             {/* Products */}
             <Grid size={10}>
               <div >
                 <Grid container spacing={1}>
-                  <Grid size={4}>
+
+                  {medicines.length>0? (
+                    medicines.map((item)=>(
+                      <Grid size={4} key={item.id}>
                     <Card sx={{ maxWidth: 345 }}>
                       <CardActionArea>
                         <CardMedia
                           component="img"
                           height="160"
-                          image="https://images-platform.99static.com//0qYvp2K6gi6EkBSm3a8-3x8oShM=/fit-in/590x590/99designs-contests-attachments/55/55482/attachment_55482781"
+                          image={item.image}
                           alt="green iguana"
                         />
                         <CardContent>
                           <Typography sx={{ml:3,color: "#0d47a1"}} gutterBottom variant="h5" component="div">
-                            Paracetamol
+                            {item.name}
                           </Typography>
                           <Typography 
                             variant="body2"
                             sx={{ color: "#039be5" }}  
                           >
-                            Medicine
+                            {item.category}
                           </Typography>
                           <Typography
                             variant="body2"
@@ -92,7 +125,7 @@ const StyledAccordion = styled(Accordion)(({ theme }) => ({
                              }}
                              
                           >
-                            INR:299
+                            INR:{item.price}
                           </Typography>
                         </CardContent>
                       </CardActionArea>
@@ -101,74 +134,14 @@ const StyledAccordion = styled(Accordion)(({ theme }) => ({
                       </CardActions>
                     </Card>
                   </Grid>
-                  <Grid size={4}>
-                    <Card sx={{ maxWidth: 345 }}>
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          height="160"
-                          image="https://images-platform.99static.com//0qYvp2K6gi6EkBSm3a8-3x8oShM=/fit-in/590x590/99designs-contests-attachments/55/55482/attachment_55482781"
-                          alt="green iguana"
-                        />
-                        <CardContent>
-                          <Typography sx={{ml:3,color: "#0d47a1"}} gutterBottom variant="h5" component="div">
-                            Paracetamol
-                          </Typography>
-                          <Typography 
-                            variant="body2"
-                            sx={{ color: "#039be5" }}  
-                          >
-                            Medicine
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{ color: "#0d47a1", mt:1
-                             }}
-                             
-                          >
-                            INR:299
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                      <CardActions>
-                        <Button sx={{ml:4}} size="small" variant="contained">ADD TO CART</Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-                  <Grid size={4}>
-                   <Card sx={{ maxWidth: 345 }}>
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          height="160"
-                          image="https://images-platform.99static.com//0qYvp2K6gi6EkBSm3a8-3x8oShM=/fit-in/590x590/99designs-contests-attachments/55/55482/attachment_55482781"
-                          alt="green iguana"
-                        />
-                        <CardContent>
-                          <Typography sx={{ml:3,color: "#0d47a1"}} gutterBottom variant="h5" component="div">
-                            Paracetamol
-                          </Typography>
-                          <Typography 
-                            variant="body2"
-                            sx={{ color: "#039be5" }}  
-                          >
-                            Medicine
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{ color: "#0d47a1", mt:1
-                             }}
-                             
-                          >
-                            INR:299
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                      <CardActions>
-                        <Button sx={{ml:4}} size="small" variant="contained">ADD TO CART</Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
+
+                    ))   
+                  ):
+                  ( <Typography sx={{ ml: 2, mt: 2 }}>
+                    Loading medicines...
+                  </Typography>)  
+                  }
+                  
                 </Grid>
               </div>
             </Grid>
