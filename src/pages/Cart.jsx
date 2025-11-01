@@ -9,8 +9,13 @@ function Cart() {
         <>
             <Header />
             <div className='min-h-screen bg-grey-50'>
+                <div className='w-full bg-linear-to-r from-cyan-300 to-cyan-500 h-50 mb-8 flex justify-center items-center'>
+                    <div className='container '>
+                        <h1 className='text-center text-5xl  font-bold text-white'>My Cart</h1>
+                    </div>
+                </div>
                 <div className='container mx-auto px-10 py-10 '>
-                    <h1 className='text-3xl font-semibold mb-3 text-gray-800'>Your Cart</h1>
+
                     <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
                         <div className='shadow-md lg:col-span-2 px-3 py-3 rounded-lg h-fit bg-blue-50'>
                             <div className='divide-y'>
@@ -40,7 +45,7 @@ function Cart() {
                                 <div className='border-t mt-2 pt-2 flex justify-between text-lg font-semibold'>Total <span>61</span></div>
                             </div>
                             <Link to="/checkout" className='block mt-6 text-center px-6 py-2 rounded bg-blue-400'>checkout</Link>
-                             <Link className='block mt-6 text-center px-6 py-2 rounded bg-gray-400'>continue shopping</Link>
+                            <Link className='block mt-6 text-center px-6 py-2 rounded bg-gray-400'>continue shopping</Link>
                         </div>
                     </div>
                 </div>
