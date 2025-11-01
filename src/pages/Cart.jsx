@@ -12,7 +12,8 @@ function Cart() {
 
     //fetch cart 
     const fetchCartItems = async () => {
-        const userId = localStorage.getItem("userId")
+        const currentUser = JSON.parse (localStorage.getItem("currentUser"))
+        const userId = currentUser?.id
         if (!userId) return alert("please login in first")
         try {
             const response = await getCartItemsAPI(userId)
@@ -26,10 +27,10 @@ function Cart() {
     }, [])
 
     //calculate
-    useEffect(() => {
-        const total = cart.reduce((prev, curr) => prev + (curr.price * curr.quantity))
-        setSubTotal(total)
-    }, [cart])
+    // useEffect(() => {
+    //     const total = cart.reduce((prev, curr) => prev + (curr.price * curr.quantity))
+    //     setSubTotal(total)
+    // }, [cart])
 
     return (
         <>

@@ -7,6 +7,35 @@ export const getMedicineAPI = async(reqbody) => {
 }
 
 
+// 2. login user
+export const loginUserAPI = async (phone, password) => {
+  return await commonAPI("GET", `${BASEURL}/user?phone=${phone}&password=${password}`);
+};
+
+
+
+
+// -cart-------------------------------------------------------
+//cart: getting cart items
+export const getCartItemsAPI = async (id) =>{
+    return await commonAPI("GET",`${BASEURL}/user/${id}`)
+}
+
+//update cart items 
+export const updateCartAPI = async (id,reqBody) =>{
+    return await commonAPI("PATCH",`${BASEURL}/user/${id}`,{Cart:reqBody})
+}
+
+
+
+
+
+
+
+
+
+
+// admin part-------------------------------------------------------
 
 
 // admin :-user management //getusers
@@ -46,13 +75,3 @@ export const deleteMedicineAPI = async (id) => {
     return await commonAPI("DELETE",`${BASEURL}/medicine/${id}`)
 }
 
-
-//cart: getting cart items
-export const getCartItemsAPI = async (id) =>{
-    return await commonAPI("GET",`${BASEURL}/user/${id}`)
-}
-
-//update cart items 
-export const updateCartAPI = async (id,reqBody) =>{
-    return await commonAPI("PATCH",`${BASEURL}/user/${id}`,{Cart:reqBody})
-}
