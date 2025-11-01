@@ -7,6 +7,26 @@ export const getMedicineAPI = async(reqbody) => {
 }
 
 
+// 2. login user
+export const loginUserAPI = async (phone, password) => {
+  return await commonAPI("GET", `${BASEURL}/user?phone=${phone}&password=${password}`);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// admin part-------------------------------------------------------
 
 
 // admin :-user management //getusers

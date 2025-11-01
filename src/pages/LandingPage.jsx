@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaHeartbeat, FaPills, FaFlask, FaPlus } from "react-icons/fa";
 import healifyLogo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUserAPI } from "../service/allAPI";
+import Swal from "sweetalert2";
 
 // Floating icon component (natural curved motion)
 const FloatingIcon = ({ Icon, xStart, yStart, size, delay }) => (
@@ -28,6 +30,53 @@ const FloatingIcon = ({ Icon, xStart, yStart, size, delay }) => (
 );
 
 const LandingPage = () => {
+
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!phone || !password) {
+      alert("Please enter both phone number and password");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter both phone number and password",
+      });
+
+      return;
+    }
+    try {
+      const res = await loginUserAPI(phone, password);
+      if (res?.status === 200 && res.data.length > 0) {
+        const loggedUser = res.data[0];
+        // ✅ Save current user to localStorage
+        localStorage.setItem("currentUser", JSON.stringify(loggedUser));
+        navigate("/home");
+        Swal.fire({
+          title: "Login successful!",
+          text: `Welcome,${loggedUser.name}!`,
+          icon: "success"
+        });
+
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Invalid phone number or password",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!"
+      });
+    }
+  };
+
   return (
     <div className="w-full h-screen flex flex-col md:flex-row overflow-hidden">
       {/* Left Side - Animation Area */}
@@ -81,24 +130,27 @@ const LandingPage = () => {
             Welcome to Healify
           </h2>
 
-          <form className="flex flex-col space-y-4">
+          <form onSubmit={handleLogin} className="flex flex-col space-y-4">
             <input
               type="text"
               placeholder="Enter Mobile Number"
               className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal-400"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
             <input
               type="password"
               placeholder="Password"
               className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal-400"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <Link to={"/home"}>
             <button
               type="submit"
               className="bg-teal-500 text-white py-3 rounded-lg hover:bg-teal-600 transition-all w-full"
             >
               Login
-            </button></Link>
+            </button>
           </form>
 
           <div className="mt-6 text-center text-gray-600">

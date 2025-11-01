@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -42,6 +42,13 @@ const smoothScroll = keyframes`
 `;
 
 const Header = () => {
+
+  const Navigate = useNavigate()
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    Navigate("/");
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       {/* --- TOP NAVBAR --- */}
@@ -115,8 +122,6 @@ const Header = () => {
               <Box display="flex" alignItems="center" gap={0.8}>
                 <PersonOutlineIcon sx={{ color: "#0d3b66", fontSize: 22 }} />
                 <Typography
-                  component={Link}
-                  to="/"
                   sx={{
                     color: "#00aaff",
                     fontSize: "13px",
@@ -126,7 +131,8 @@ const Header = () => {
                     "&:hover": { textDecoration: "underline" },
                   }}
                 >
-                  LOG OUT
+                  <button onClick={handleLogout}>LOG OUT</button>
+
                 </Typography>
               </Box>
             </Stack>
