@@ -3,29 +3,37 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import { acceptUserAPI, rejectUserAPI, userManageAPI } from "../../service/allAPI";
 
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([])
   const [acceptedUsers, setacceptedUsers] = useState([])
-  const [rejectedUsers , setrejectedUsers] = useState([])
+  const [rejectedUsers, setrejectedUsers] = useState([])
+
+  const userManage = async () => {
+    const result = await userManageAPI()
+    console.log(result)
+    setUsers(result?.data)
+  }
 
   useEffect(() => {
-    axios.get("http://localhost:3000/user")
-      .then((result) => setUsers(result.data))
-      .catch((err) => console.log(err)
-      )
+    userManage()
   }, [])
 
-  const handleAccept = (id) => {
+  const handleAccept = async (id) => {
+    await acceptUserAPI(id, { status: "Accepted" })
     alert("User Accepted Successfully!!")
     setacceptedUsers([...acceptedUsers, id])
+    userManage()
 
   }
 
-  const handleReject = (id) => {
+  const handleReject = async (id) => {
+    await rejectUserAPI(id, { status: "Rejected" })
     alert("Oops...User got rejected !!")
-    setrejectedUsers([...rejectedUsers,id])
+    setrejectedUsers([...rejectedUsers, id])
+    userManage()
   }
 
   return (
@@ -53,49 +61,66 @@ const AdminUsers = () => {
                 <th className="py-3 px-4 font-semibold">Name</th>
                 <th className="py-3 px-4 font-semibold">Email</th>
                 <th className="py-3 px-4 font-semibold">Phone</th>
+                <th className="py-3 px-4 font-semibold">Status</th>
                 <th className="py-3 px-4 font-semibold text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
-
               {users.map((user, index) => (
-                <tr key={index} className="border-b border-gray-100 hover:bg-teal-50 transition">
+                <tr
+                  key={index}
+                  className={`border-b border-gray-100 transition ${user.status === "Accepted"
+                    ? "bg-green-50"
+                    : user.status === "Rejected"
+                      ? "bg-red-50"
+                      : "hover:bg-teal-50"
+                    }`}
+                >
                   <td className="py-3 px-4 text-gray-700">{index + 1}</td>
                   <td className="py-3 px-4 text-gray-800 font-medium">{user.name}</td>
                   <td className="py-3 px-4 text-gray-600">{user.gmail}</td>
                   <td className="py-3 px-4 text-gray-600">{user.phone}</td>
 
-                  <td className="py-3 px-4 flex justify-center space-x-3">
-                    {acceptedUsers.includes(user.id) ?
-                      (<span className="text-green-600 font-semibold">Accepted</span>) :
-                      rejectedUsers.includes(user.id) ? 
-                      (<span className="text-red-600 font-semibold">Rejected</span>) :
-                      (
-                        <>
-                          <button onClick={() => handleAccept(user.id)}
-                            className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-3 py-1 rounded-lg text-sm font-medium hover:shadow-md transition"
-                          >Accept </button>
-                          <button onClick={() => handleReject(user.id)}
-                            className="bg-red-500 text-white px-3 py-1 rounded-lg text-sm font-medium hover:shadow-md transition"
-                          >
-                            Reject
-                          </button>
-                        </>
-                      )}
-
-
-
-
-
+                  {/* Status */}
+                  <td className="py-3 px-4 text-center">
+                    {user.status === "Accepted" ? (
+                      <span className="text-green-600 font-semibold">Accepted</span>
+                    ) : user.status === "Rejected" ? (
+                      <span className="text-red-600 font-semibold">Rejected</span>
+                    ) : (
+                      <span className="text-gray-500 italic">Pending</span>
+                    )}
                   </td>
 
+                  {/* Actions */}
+                  <td className="py-3 px-4 flex justify-center space-x-3">
+                    {user.status === "Accepted" || user.status === "Rejected" ? (
+                      <span className="text-sm text-gray-400">No actions</span>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => handleAccept(user.id)}
+                          className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-3 py-1 rounded-lg text-sm font-medium hover:shadow-md transition"
+                        >
+                          Accept
+                        </button>
+                        <button
+                          onClick={() => handleReject(user.id)}
+                          className="bg-red-500 text-white px-3 py-1 rounded-lg text-sm font-medium hover:shadow-md transition"
+                        >
+                          Reject
+                        </button>
+                      </>
+                    )}
+                  </td>
                 </tr>
-              ))
-              }
-
-
+              ))}
             </tbody>
           </table>
+          {/* Empty state */}
+          {users.length === 0 && (
+            <p className="text-center py-4 text-gray-500">No users found.</p>
+          )}
         </div>
       </div>
     </div>
