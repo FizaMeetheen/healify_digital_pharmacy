@@ -64,8 +64,21 @@ export const showMedicineAPI = async() => {
 }
 
 //admin : edit medicines
+export const editMedicineAPI = async (id,reqBody) => {
+    return await commonAPI("PUT",`${BASEURL}/medicine/${id}`,reqBody)
+}
 
 //admin : delete medicines
 export const deleteMedicineAPI = async (id) => {
     return await commonAPI("DELETE",`${BASEURL}/medicine/${id}`)
+}
+
+//admin : //get cart booking details
+export const getCartDetailsAPI = async() => {
+    return await commonAPI("GET",`${BASEURL}/bookings`)
+}
+
+// admin : // clear cart details of each user
+export const deleteCartAPI = async (id) => {
+    return await commonAPI("DELETE",`${BASEURL}/bookings/${id}`)
 }

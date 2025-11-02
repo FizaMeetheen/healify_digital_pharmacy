@@ -11,28 +11,30 @@ import AdminMedicines from './pages/adminPages/AdminMedicines'
 import AdminUsers from './pages/adminPages/AdminUsers'
 import LabBooking from './pages/LabBooking'
 import AdminLab from './pages/adminPages/AdminLab'
+import AdminCart from './pages/adminPages/AdminCart'
 
 
 function App() {
 
   return (
     <>
-    
-     <Routes>
-      <Route path="/" element={<LandingPage/>}/>
-      <Route path="/register" element={<Register />} />
-      <Route path="/home" element={<Home/>}/>
-      <Route path="/cart" element={<Cart/>}/>
-      <Route path="/checkout" element={<Checkout/>}/>
-      <Route path="/products" element={<Products/>}/>
-      <Route path="/adminHome" element={<AdminHome/>}/>
-      <Route path="/adminHome/adminMedicines" element={<AdminMedicines/>}/>
-      <Route path="/adminHome/adminUsers" element={<AdminUsers/>}/>
-      <Route path="/labtest" element={<LabBooking/>}/>
-      <Route path="/adminHome/labDetails" element={<AdminLab/>}/>
-      
-     
-     </Routes>
+
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/adminHome" element={<AdminHome />} />
+        <Route path="/adminHome/adminMedicines" element={<AdminMedicines />} />
+        <Route path="/adminHome/adminUsers" element={<AdminUsers />} />
+        <Route path="/labtest" element={<LabBooking />} />
+        <Route path="/adminHome/labDetails" element={<AdminLab />} />
+        <Route path="/adminHome/cartDetails" element={<AdminCart />} />
+
+
+      </Routes>
     </>
   )
 }

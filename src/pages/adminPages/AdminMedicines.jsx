@@ -3,9 +3,10 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FaArrowLeft, FaCheckCircle } from "react-icons/fa";
-import { addMedicineAPI, deleteMedicineAPI, showMedicineAPI } from "../../service/allAPI";
+import { addMedicineAPI, deleteMedicineAPI, editMedicineAPI, showMedicineAPI } from "../../service/allAPI";
 import Swal from 'sweetalert2'
 import { useState } from "react";
+import EditMed from "../../components/EditMed";
 
 const AdminMedicines = () => {
   const categories = ["Personal Care", "Nutrition supplements", "Ayurvedic Products", "Mother and Baby Care", " Eye Care Products", "Cold & Cough Products", "Health Care Devices", "Elderly Care"];
@@ -21,6 +22,9 @@ const AdminMedicines = () => {
     brand: "",
     category: ""
   })
+
+  const [editMedicine, seteditMedicine] = useState(false)
+  const [editId, seteditId] = useState("")
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -60,6 +64,26 @@ const AdminMedicines = () => {
     getMedicine()
   }, [])
 
+  // edit medicines
+
+  const handleEdit = async (med) => {
+    seteditId(med.id)
+    setadminInput({
+      name: med.name,
+      image: med.image,
+      price: med.price,
+      precuations: med.precuations,
+      usedFor: med.usedFor,
+      sideEffects: med.sideEffects,
+      brand: med.brand,
+      category: med.category
+
+    })
+    seteditMedicine(true)
+  }
+
+
+
   // delete medicines 
   const handledeleteMedicine = async (id) => {
     const result = await deleteMedicineAPI(id)
@@ -90,105 +114,118 @@ const AdminMedicines = () => {
       </div>
 
       {/* Form Card */}
-      <motion.div
-        className="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Name */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Name</label>
-            <input name="name" value={adminInput.name} onChange={handleChange}
-              type="text"
-              placeholder="Enter medicine name"
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
-            />
-          </div>
-
-          {/* Price */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Price (₹)</label>
-            <input name="price" value={adminInput.price} onChange={handleChange}
-              type="number"
-              placeholder="Enter price"
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
-            />
-          </div>
-
-          {/* Precautions */}
-          <div className="md:col-span-2">
-            <label className="block text-gray-700 font-medium mb-2">Precautions</label>
-            <textarea name="precuations" value={adminInput.precuations} onChange={handleChange}
-              placeholder="Enter precautions"
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
-              rows="2"
-            ></textarea>
-          </div>
-
-          {/* Image URL */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Image URL</label>
-            <input name="image" value={adminInput.image} onChange={handleChange}
-              type="text"
-              placeholder="Enter image URL"
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
-            />
-          </div>
-
-          {/* Used For */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Used For</label>
-            <input name="usedFor" value={adminInput.usedFor} onChange={handleChange}
-              type="text"
-              placeholder="E.g. Fever, Pain Relief..."
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
-            />
-          </div>
-
-          {/* Side Effects */}
-          <div className="md:col-span-2">
-            <label className="block text-gray-700 font-medium mb-2">Side Effects</label>
-            <textarea name="sideEffects" value={adminInput.sideEffects} onChange={handleChange}
-              placeholder="Enter side effects"
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
-              rows="2"
-            ></textarea>
-          </div>
-
-          {/* Brand */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Brand</label>
-            <input name="brand" value={adminInput.brand} onChange={handleChange}
-              type="text"
-              placeholder="Enter brand name"
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
-            />
-          </div>
-
-          {/* Category Dropdown */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Category</label>
-            <select name="category" value={adminInput.category} onChange={handleChange} className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none">
-              <option value="">Select category</option>
-              {categories.map((cat, index) => (
-                <option key={index} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Save Button */}
-        <motion.button onClick={handleaddMedicine}
-          whileHover={{ scale: 1.05 }}
-          className="mt-8 w-full bg-gradient-to-r from-teal-500 to-green-500 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition"
+      {!editMedicine ? (
+        <motion.div
+          className="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          <FaCheckCircle className="inline mr-2" /> Add Medicine
-        </motion.button>
-      </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Name */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">Name</label>
+              <input name="name" value={adminInput.name} onChange={handleChange}
+                type="text"
+                placeholder="Enter medicine name"
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
+              />
+            </div>
+
+            {/* Price */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">Price (₹)</label>
+              <input name="price" value={adminInput.price} onChange={handleChange}
+                type="number"
+                placeholder="Enter price"
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
+              />
+            </div>
+
+            {/* Precautions */}
+            <div className="md:col-span-2">
+              <label className="block text-gray-700 font-medium mb-2">Precautions</label>
+              <textarea name="precuations" value={adminInput.precuations} onChange={handleChange}
+                placeholder="Enter precautions"
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
+                rows="2"
+              ></textarea>
+            </div>
+
+            {/* Image URL */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">Image URL</label>
+              <input name="image" value={adminInput.image} onChange={handleChange}
+                type="text"
+                placeholder="Enter image URL"
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
+              />
+            </div>
+
+            {/* Used For */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">Used For</label>
+              <input name="usedFor" value={adminInput.usedFor} onChange={handleChange}
+                type="text"
+                placeholder="E.g. Fever, Pain Relief..."
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
+              />
+            </div>
+
+            {/* Side Effects */}
+            <div className="md:col-span-2">
+              <label className="block text-gray-700 font-medium mb-2">Side Effects</label>
+              <textarea name="sideEffects" value={adminInput.sideEffects} onChange={handleChange}
+                placeholder="Enter side effects"
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
+                rows="2"
+              ></textarea>
+            </div>
+
+            {/* Brand */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">Brand</label>
+              <input name="brand" value={adminInput.brand} onChange={handleChange}
+                type="text"
+                placeholder="Enter brand name"
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none"
+              />
+            </div>
+
+            {/* Category Dropdown */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">Category</label>
+              <select name="category" value={adminInput.category} onChange={handleChange} className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none">
+                <option value="">Select category</option>
+                {categories.map((cat, index) => (
+                  <option key={index} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Save Button */}
+          <motion.button onClick={handleaddMedicine}
+            whileHover={{ scale: 1.05 }}
+            className="mt-8 w-full bg-gradient-to-r from-teal-500 to-green-500 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition"
+          >
+            <FaCheckCircle className="inline mr-2" /> Add Medicine
+          </motion.button>
+        </motion.div>)
+        :
+
+       (
+        <EditMed  //edit modal appears
+          seteditMedicine={seteditMedicine}
+          seteditId={seteditId}
+          editId={editId}
+          setadminInput={setadminInput}
+          adminInput={adminInput}
+          getMedicine={getMedicine} //passing props
+        />
+      )}
 
       {/* SHOW MEDICINES */}
       <div class="w-full max-w-6xl mt-12">
@@ -208,13 +245,15 @@ const AdminMedicines = () => {
               <p class="text-green-600 font-semibold text-lg mb-4">₹{med.price}</p>
 
               <div class="flex justify-between">
-                <button class="bg-gradient-to-r from-teal-500 to-green-500 text-white font-semibold px-4 py-1 rounded-lg  transition">Edit</button>
-                <button onClick={()=>handledeleteMedicine(med.id)} class="bg-red-500 text-white px-4 py-1 rounded-lg hover:bg-red-600 transition">Delete</button>
+                <button onClick={() => handleEdit(med)} class="bg-gradient-to-r from-teal-500 to-green-500 text-white font-semibold px-4 py-1 rounded-lg  transition">Edit</button>
+                <button onClick={() => handledeleteMedicine(med.id)} class="bg-red-500 text-white px-4 py-1 rounded-lg hover:bg-red-600 transition">Delete</button>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+
 
     </div>
 

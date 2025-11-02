@@ -155,7 +155,7 @@ const AdminHome = () => {
             </div>
             <h3 className="text-lg font-semibold mb-2">Cart Bookings</h3>
             <Link
-              to="#"
+              to="/adminHome/cartDetails"
               className="bg-white/20 px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/30 transition"
             >
               Open
