@@ -11,6 +11,7 @@ import AdminMedicines from './pages/adminPages/AdminMedicines'
 import AdminUsers from './pages/adminPages/AdminUsers'
 import LabBooking from './pages/LabBooking'
 import AdminLab from './pages/adminPages/AdminLab'
+import Category from './pages/Category'
 
 
 function App() {
@@ -30,8 +31,7 @@ function App() {
       <Route path="/adminHome/adminUsers" element={<AdminUsers/>}/>
       <Route path="/labtest" element={<LabBooking/>}/>
       <Route path="/adminHome/labDetails" element={<AdminLab/>}/>
-      
-     
+      <Route path="/category" element={<Category/>}/>
      </Routes>
     </>
   )
