@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { deleteCartAPI, getCartDetailsAPI } from "../../service/allAPI";
+import {  deleteCartDataAPI, getCartDetailsAPI } from "../../service/allAPI";
 import Swal from "sweetalert2";
 
 function AdminCart() {
@@ -20,7 +20,7 @@ function AdminCart() {
     }, []);
 
     const handleclearCart = async (id) => {
-        const res = await deleteCartAPI(id)
+        const res = await deleteCartDataAPI(id)
         console.log(res);
         Swal.fire({
             title: "Good job!",
