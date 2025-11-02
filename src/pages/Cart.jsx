@@ -4,11 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
-import { getCartItemsAPI } from '../service/allAPI'
+import { getCartItemsAPI, updateCartAPI } from '../service/allAPI'
 
 function Cart() {
     const [cart, setCart] = useState([])
     const [subtotal, setSubTotal] = useState(0)
+    
 
     //fetch cart 
     const fetchCartItems = async () => {
@@ -27,10 +28,24 @@ function Cart() {
     }, [])
 
     //calculate
-    // useEffect(() => {
-    //     const total = cart.reduce((prev, curr) => prev + (curr.price * curr.quantity))
-    //     setSubTotal(total)
-    // }, [cart])
+    useEffect(() => {
+        const total = cart.reduce((prev, curr) => prev + (curr.price * curr.quantity),0)
+        setSubTotal(total) 
+    }, [cart])
+
+    const increaseQuantity = async(medicineId)=>{
+        const userId = JSON.parse(localStorage.getItem("currentUser"))?.id
+        const updatedCart = cart.map((item)=>item.medicineId == medicineId ?{...item, quantity:item.quantity+1}:item)
+        setCart(updatedCart)
+        await updateCartAPI(userId,updatedCart)
+    }
+
+     const decreaseQuantity = async(medicineId)=>{
+        const userId = JSON.parse(localStorage.getItem("currentUser"))?.id
+        const updatedCart = cart.map((item)=>item.medicineId == medicineId ?{...item, quantity:item.quantity-1}:item).filter(item => item.quantity >0)
+        setCart(updatedCart)
+        await updateCartAPI(userId,updatedCart)
+    }
 
     return (
         <>
@@ -53,9 +68,9 @@ function Cart() {
                                         <h3 className='font-semibold'>{item.name}</h3>
                                         <p className='text-sm'>{item.brand}</p>
                                         <div className='mt-2 flex items-center gap-3'>
-                                            <button className='border w-8 h-8 items-center justify-center rounded-lg'>-</button>
+                                            <button onClick={()=>decreaseQuantity(item.medicineId)} className='border w-8 h-8 items-center justify-center rounded-lg'>-</button>
                                             <span className='text-center w-4'>{item.quantity}</span>
-                                            <button className='border w-8 h-8 items-center justify-center rounded-lg'>+</button>
+                                            <button onClick={()=>increaseQuantity(item.medicineId)} className='border w-8 h-8 items-center justify-center rounded-lg'>+</button>
                                         </div>
                                     </div>
                                     <div className='text-right'>
@@ -73,10 +88,10 @@ function Cart() {
                             <div className='text-sm m-2 '>
                                 <div className='flex justify-between'>subtotal <span className='font-medium'>₹{subtotal}</span></div>
                                 <div className='flex justify-between'>tax <span className='font-medium'>₹{Math.round(subtotal * 0.05)}</span></div>
-                                <div className='border-t mt-2 pt-2 flex justify-between text-lg font-semibold'>Total <span>56</span></div>
+                                <div className='border-t mt-2 pt-2 flex justify-between text-lg font-semibold'>Total <span>₹{Math.ceil(subtotal+subtotal*0.05)}</span></div>
                             </div>
                             <Link to="/checkout" className='block mt-6 text-center px-6 py-2 rounded bg-blue-900 text-white'>checkout</Link>
-                            <Link to={"/medicine"} className='block mt-6 text-center px-6 py-2 rounded bg-gray-400'>continue shopping</Link>
+                            <Link to={"/products"} className='block mt-6 text-center px-6 py-2 rounded bg-gray-400'>continue shopping</Link>
                         </div>
                     </div>
                 </div>

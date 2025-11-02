@@ -38,7 +38,6 @@ const LandingPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!phone || !password) {
-      alert("Please enter both phone number and password");
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -51,7 +50,6 @@ const LandingPage = () => {
       const res = await loginUserAPI(phone, password);
       if (res?.status === 200 && res.data.length > 0) {
         const loggedUser = res.data[0];
-        // ✅ Save current user to localStorage
         localStorage.setItem("currentUser", JSON.stringify(loggedUser));
         navigate("/home");
         Swal.fire({

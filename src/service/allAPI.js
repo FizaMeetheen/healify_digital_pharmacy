@@ -13,6 +13,10 @@ export const loginUserAPI = async (phone, password) => {
 };
 
 
+// 3. Register new user
+export const registerUserAPI = async (userData) => {
+  return await commonAPI("POST", `${BASEURL}/user`, userData);
+};
 
 
 // -cart-------------------------------------------------------
