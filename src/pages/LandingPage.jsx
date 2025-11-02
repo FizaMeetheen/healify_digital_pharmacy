@@ -43,37 +43,41 @@ const LandingPage = () => {
         title: "Oops...",
         text: "Please enter both phone number and password",
       });
-
       return;
     }
-    try {
-      const res = await loginUserAPI(phone, password);
-      if (res?.status === 200 && res.data.length > 0) {
-        const loggedUser = res.data[0];
-        localStorage.setItem("currentUser", JSON.stringify(loggedUser));
-        navigate("/home");
-        Swal.fire({
-          title: "Login successful!",
-          text: `Welcome,${loggedUser.name}!`,
-          icon: "success"
-        });
+    if (phone == "adminphone" && password == "admin") {
+      navigate("/adminHome")
+    } else {
+      try {
+        const res = await loginUserAPI(phone, password);
+        if (res?.status === 200 && res.data.length > 0) {
+          const loggedUser = res.data[0];
+          localStorage.setItem("currentUser", JSON.stringify(loggedUser));
+          navigate("/home");
+          Swal.fire({
+            title: "Login successful!",
+            text: `Welcome,${loggedUser.name}!`,
+            icon: "success"
+          });
 
-      } else {
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid phone number or password",
+          });
+        }
+      } catch (error) {
+        console.error(error);
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Invalid phone number or password",
+          text: "Something went wrong!"
         });
       }
-    } catch (error) {
-      console.error(error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!"
-      });
-    }
-  };
+    };
+  }
+
 
   return (
     <div className="w-full h-screen flex flex-col md:flex-row overflow-hidden">
