@@ -9,9 +9,15 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 import Header from "../components/Header";
 import { getMedicineAPI } from "../service/allAPI";
+import { useLocation } from "react-router-dom";
 
 function Category() {
+
+  const location = useLocation()
+  const category = location.state?.category
+
   const [medicines, setMedicines] = useState([]);
+  const [filteredMedicines, setFilteredMedicines] = useState([]);
 
 
   const getAllMedicines = async () => {
@@ -29,6 +35,17 @@ function Category() {
     getAllMedicines();
   }, []);
 
+  useEffect(() => {
+    if (category) {
+      const filtered = medicines.filter(
+        (item) => item.category.toLowerCase() === category.toLowerCase()
+      );
+      setFilteredMedicines(filtered);
+    } else {
+      setFilteredMedicines(medicines);
+    }
+  }, [category, medicines]);
+
   return (
     <>
       <Header />
@@ -36,15 +53,15 @@ function Category() {
         {/* Banner Section */}
         <div className="w-full shadow-2xl h-70 bg-radial from-cyan-300 to-cyan-500 flex justify-center items-center">
           <h1 className="text-5xl font-bold text-white">
-            Incoming Category - Medicines
+            {category}
           </h1>
         </div>
 
         {/* Products Section */}
         <div className="w-auto mx-5 my-10">
           <Grid container spacing={4} justifyContent="center">
-            {medicines.length > 0 ? (
-              medicines.map((item) => (
+            {filteredMedicines.length > 0 ? (
+              filteredMedicines.map((item) => (
                 <Grid
                   item
                   xs={12}
