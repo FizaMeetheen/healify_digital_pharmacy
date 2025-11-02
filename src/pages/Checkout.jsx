@@ -5,6 +5,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons'
 
 function Checkout() {
+  const[userInput, setUserInput] = useState({
+    firstname: '',
+    lastname: '',
+    address: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    phone: '',
+    cardholdername: '',
+    cardnumber:'',
+    exipry:'',
+    cvc:''
+  })
   const [paymentMethod, setPaymentMethod] = useState('cod')
   return (
     <>
