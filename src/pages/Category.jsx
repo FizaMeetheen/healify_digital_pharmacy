@@ -68,7 +68,7 @@ function Category() {
                       "&:hover": { transform: "scale(1.03)" },
                     }}
                   >
-                    <CardActionArea>
+                    <CardActionArea sx={{ flexGrow: 1 }}>
                       <CardMedia
                         component="img"
                         height="180"
@@ -80,7 +80,7 @@ function Category() {
                           borderTopRightRadius: 10,
                         }}
                       />
-                      <CardContent>
+                      <CardContent sx={{ flexGrow: 1, minHeight: 130 }}>
                         <Typography
                           sx={{ color: "#0d47a1", fontWeight: "bold" }}
                           gutterBottom

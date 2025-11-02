@@ -25,7 +25,7 @@ function Products() {
   const [medicines, setmedicines] = useState([]);
   const [selectedCategory, setselectedCategory] = useState(null);
 
-  const categories=[
+  const categories = [
     "Personal Care",
     "Nutrition Supplements",
     "Ayurvedic Products",
@@ -34,7 +34,7 @@ function Products() {
     "Cold and Cough Products",
     "Health Care Devices",
     "Elderly Care",
-  ]
+  ];
 
   const getAllMedicines = async () => {
     try {
@@ -59,9 +59,10 @@ function Products() {
     }),
   }));
 
-  const filteredMedicines= selectedCategory && selectedCategory!="ALL"? medicines?.filter(item=> item.category ===selectedCategory) :medicines
-
-
+  const filteredMedicines =
+    selectedCategory && selectedCategory != "ALL"
+      ? medicines?.filter((item) => item.category === selectedCategory)
+      : medicines;
 
   return (
     <>
@@ -90,22 +91,26 @@ function Products() {
                         </AccordionSummary>
                         <AccordionDetails>
                           <h4
-                          className={`font-bold ms-2 mt-3 cursor-pointer ${
-                            selectedCategory === null
-                              ? "text-sky-600"
-                              : "text-gray-600"
-                          }`}
-                          onClick={() => setselectedCategory(null)}
-                        >
-                          All
-                        </h4>
-                          {categories.map((item,index)=>(
-                            <h4 key={index} className={`font-bold ms-2 mt-3 cursor-pointer ${
-                              selectedCategory === item? "text-sky-600" : "text-gray-600"
+                            className={`font-bold ms-2 mt-3 cursor-pointer ${
+                              selectedCategory === null
+                                ? "text-sky-600"
+                                : "text-gray-600"
                             }`}
-                            onClick={()=>setselectedCategory(item)}>
+                            onClick={() => setselectedCategory(null)}
+                          >
+                            All
+                          </h4>
+                          {categories.map((item, index) => (
+                            <h4
+                              key={index}
+                              className={`font-bold ms-2 mt-3 cursor-pointer ${
+                                selectedCategory === item
+                                  ? "text-sky-600"
+                                  : "text-gray-600"
+                              }`}
+                              onClick={() => setselectedCategory(item)}
+                            >
                               {item}
-                              
                             </h4>
                           ))}
                         </AccordionDetails>
@@ -118,20 +123,35 @@ function Products() {
             {/* Products */}
             <Grid size={10}>
               <div>
-                <Grid container spacing={1}>
-
+                <Grid container spacing={3}>
                   {filteredMedicines.length > 0 ? (
                     filteredMedicines.map((item) => (
                       <Grid size={4} key={item.id}>
-                        <Card sx={{ maxWidth: 345 }}>
-                          <CardActionArea>
+                        <Card
+                          sx={{
+                            width: 345,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                            borderRadius: 3,
+                            boxShadow: 3,
+                            transition:
+                              "transform 0.2s ease, box-shadow 0.2s ease",
+                            "&:hover": {
+                              transform: "scale(1.03)",
+                              boxShadow: 6,
+                            },
+                          }}
+                        >
+                          <CardActionArea sx={{ flexGrow: 1 }}>
                             <CardMedia
                               component="img"
-                              height="160"
+                              height="180"
                               image={item.image}
                               alt={item.name}
+                              sx={{ objectFit: "cover" }}
                             />
-                            <CardContent>
+                            <CardContent sx={{ flexGrow: 1, minHeight: 130 }}>
                               <Typography
                                 sx={{ ml: 3, color: "#0d47a1" }}
                                 gutterBottom
