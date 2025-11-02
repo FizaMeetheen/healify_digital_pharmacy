@@ -2,32 +2,42 @@ import commonAPI from "./CommonAPI"
 import BASEURL from "./serverURL"
 
 //1. getAllMedicine
-export const getMedicineAPI = async(reqbody) => {
+export const getMedicineAPI = async (reqbody) => {
     return await commonAPI("GET", `${BASEURL}/medicine`, reqbody)
 }
 
 
 // 2. login user
 export const loginUserAPI = async (phone, password) => {
-  return await commonAPI("GET", `${BASEURL}/user?phone=${phone}&password=${password}`);
+    return await commonAPI("GET", `${BASEURL}/user?phone=${phone}&password=${password}`);
 };
 
 
 // 3. Register new user
 export const registerUserAPI = async (userData) => {
-  return await commonAPI("POST", `${BASEURL}/user`, userData);
+    return await commonAPI("POST", `${BASEURL}/user`, userData);
 };
 
 
 // -cart-------------------------------------------------------
 //cart: getting cart items
-export const getCartItemsAPI = async (id) =>{
-    return await commonAPI("GET",`${BASEURL}/user/${id}`)
+export const getCartItemsAPI = async (id) => {
+    return await commonAPI("GET", `${BASEURL}/user/${id}`)
 }
 
 //update cart items 
-export const updateCartAPI = async (id,reqBody) =>{
-    return await commonAPI("PATCH",`${BASEURL}/user/${id}`,{Cart:reqBody})
+export const updateCartAPI = async (id, reqBody) => {
+    return await commonAPI("PATCH", `${BASEURL}/user/${id}`, { Cart: reqBody })
+}
+
+//delete cart item 
+export const deleteCartAPI = async (id)=>{
+    return await commonAPI("DELETE", `${BASEURL}/user/${id}`)
+}
+
+//delete all cart items
+export const deleteAllCartAPI = async(id)=>{
+    return await commonAPI("PATCH", `${BASEURL}/user/${id}`,{ Cart: []})
 }
 
 
@@ -48,27 +58,27 @@ export const userManageAPI = async () => {
 }
 
 //acceptUser
-export const acceptUserAPI = async (id,reqBody) => {
-    return await commonAPI("PATCH",`${BASEURL}/user/${id}`,reqBody)
+export const acceptUserAPI = async (id, reqBody) => {
+    return await commonAPI("PATCH", `${BASEURL}/user/${id}`, reqBody)
 }
 
 //rejectuser
-export const rejectUserAPI = async (id,reqBody) => {
-    return await commonAPI("PATCH",`${BASEURL}/user/${id}`,reqBody)
+export const rejectUserAPI = async (id, reqBody) => {
+    return await commonAPI("PATCH", `${BASEURL}/user/${id}`, reqBody)
 }
 
 // admin : lab booking management //get booking details
 export const labManageAPI = async () => {
-    return await commonAPI("GET",`${BASEURL}/labTest_booking`)
+    return await commonAPI("GET", `${BASEURL}/labTest_booking`)
 }
 
 //admin : add medicines 
-export const addMedicineAPI = async(reqBody) =>{
-    return await commonAPI("POST",`${BASEURL}/medicine`,reqBody)
+export const addMedicineAPI = async (reqBody) => {
+    return await commonAPI("POST", `${BASEURL}/medicine`, reqBody)
 }
 
 //admin : showMedicines
-export const showMedicineAPI = async() => {
+export const showMedicineAPI = async () => {
     return await commonAPI("GET", `${BASEURL}/medicine`)
 }
 
@@ -76,6 +86,6 @@ export const showMedicineAPI = async() => {
 
 //admin : delete medicines
 export const deleteMedicineAPI = async (id) => {
-    return await commonAPI("DELETE",`${BASEURL}/medicine/${id}`)
+    return await commonAPI("DELETE", `${BASEURL}/medicine/${id}`)
 }
 

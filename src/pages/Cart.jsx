@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
-import { getCartItemsAPI, updateCartAPI } from '../service/allAPI'
+import { deleteAllCartAPI, getCartItemsAPI, updateCartAPI } from '../service/allAPI'
 
 function Cart() {
     const [cart, setCart] = useState([])
@@ -46,6 +46,19 @@ function Cart() {
         setCart(updatedCart)
         await updateCartAPI(userId,updatedCart)
     }
+    const handleDelete = async(medicineId)=>{
+        const userId = JSON.parse(localStorage.getItem("currentUser"))?.id
+        const updatedCart = cart.filter((item)=>item.medicineId != medicineId)
+        setCart(updatedCart)
+        await updateCartAPI(userId,updatedCart)
+    }
+
+    const handleDelteAll = async()=>{
+        const userId = JSON.parse(localStorage.getItem("currentUser"))?.id
+        await deleteAllCartAPI(userId)
+        setCart([])
+        
+    }
 
     return (
         <>
@@ -75,13 +88,14 @@ function Cart() {
                                     </div>
                                     <div className='text-right'>
                                         <div className='font-sem-bold mr-1'>₹{item.price * item.quantity}</div>
-                                        <button><FontAwesomeIcon icon={faTrash} className='text-red-500' /></button>
+                                        <button onClick={()=>handleDelete(item.medicineId)}><FontAwesomeIcon icon={faTrash} className='text-red-500' /></button>
                                     </div>
                                 </div>
                             ))
                         :
                         <p className='text-center py-10'>Your cart is empty</p>
                         }
+                        <div className='text-right px-2 py-2'><button onClick={handleDelteAll} className='border px-2 py-1 rounded-lg shadow-md bg-linear-to-r from-cyan-300 to-blue-400 hover:from-cyan-200 hover:to-blue-300'>Delete Cart</button></div>
                         </div>
                         <div className='shadow-md p-6 rounded-lg  '>
                             <h2 className='text-xl'>Order Summary</h2>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -12,6 +12,9 @@ import logo from "../assets/logo.png";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { keyframes } from "@mui/system";
+import Tooltip from "@mui/material/Tooltip";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const mainPages = [
   { name: "Home", path: "/home" },
@@ -20,6 +23,7 @@ const mainPages = [
   { name: "Store Locator", path: "/store" },
   { name: "Contact Us", path: "/contact" },
 ];
+
 
 const subPages = [
   "Beauty Care",
@@ -43,6 +47,20 @@ const smoothScroll = keyframes`
 
 const Header = () => {
 
+
+  const res = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = res ? res.name : null;
+
+  const settings = [`${currentUser}`, 'Logout'];
+  const [anchorElUser, setAnchorElUser] = useState(null)
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   const Navigate = useNavigate()
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
@@ -57,7 +75,8 @@ const Header = () => {
         sx={{
           backgroundColor: "white",
           boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
-          paddingY: 0.3,
+          paddingY: 0.6,
+          paddingRight:0.2
         }}
       >
         <Container maxWidth="xl">
@@ -75,7 +94,7 @@ const Header = () => {
                   src={logo}
                   alt="Healify Logo"
                   style={{
-                    width: "200px",
+                    width: "220px",
                     height: "auto",
                     cursor: "pointer",
                   }}
@@ -91,6 +110,7 @@ const Header = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 flexGrow: 1,
+                paddingRight:8
               }}
             >
               {mainPages.map((page) => (
@@ -120,8 +140,45 @@ const Header = () => {
                 <ShoppingBagOutlinedIcon sx={{ color: "#0d3b66", fontSize: 26 }} />
               </IconButton>
               <Box display="flex" alignItems="center" gap={0.8}>
-                <PersonOutlineIcon sx={{ color: "#0d3b66", fontSize: 22 }} />
-                <Typography
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <PersonOutlineIcon sx={{ color: "#0d3b66", fontSize: 28 }} />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting, index) => (
+                    <MenuItem
+                      key={index}
+                      onClick={() => {
+                        handleCloseUserMenu();
+                        if (setting === "Logout") {
+                          handleLogout(); 
+                        }
+                      }}
+                    >
+                      <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
+                    </MenuItem>
+                  ))}
+
+                </Menu>
+
+
+                {/* <Typography
                   sx={{
                     color: "#00aaff",
                     fontSize: "13px",
@@ -133,7 +190,7 @@ const Header = () => {
                 >
                   <button onClick={handleLogout}>LOG OUT</button>
 
-                </Typography>
+                </Typography> */}
               </Box>
             </Stack>
           </Toolbar>
