@@ -20,7 +20,7 @@ const mainPages = [
   { name: "Home", path: "/home" },
   { name: "Medicines", path: "/products" },
   { name: "Lab Test", path: "/labtest" },
-  { name: "Store Locator", path: "/store" },
+  { name: "Store Locator", path: "/storelocator" },
   { name: "Contact Us", path: "/contact" },
 ];
 

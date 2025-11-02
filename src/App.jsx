@@ -13,6 +13,7 @@ import LabBooking from './pages/LabBooking'
 import AdminLab from './pages/adminPages/AdminLab'
 import Category from './pages/Category'
 import AdminCart from './pages/adminPages/AdminCart'
+import StoreLocator from './pages/StoreLocator'
 
 
 function App() {
@@ -27,12 +28,13 @@ function App() {
       <Route path="/cart" element={<Cart/>}/>
       <Route path="/checkout" element={<Checkout/>}/>
       <Route path="/products" element={<Products/>}/>
+      <Route path="/labtest" element={<LabBooking/>}/>
+      <Route path="/category" element={<Category/>}/>
+      <Route path="/storelocator" element={<StoreLocator/>}/>
       <Route path="/adminHome" element={<AdminHome/>}/>
       <Route path="/adminHome/adminMedicines" element={<AdminMedicines/>}/>
       <Route path="/adminHome/adminUsers" element={<AdminUsers/>}/>
-      <Route path="/labtest" element={<LabBooking/>}/>
       <Route path="/adminHome/labDetails" element={<AdminLab/>}/>
-      <Route path="/category" element={<Category/>}/>
       <Route path="/adminHome/cartDetails" element={<AdminCart/>}/>
      </Routes>
     </>
