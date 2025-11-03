@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  deleteCartDataAPI, getCartDetailsAPI } from "../../service/allAPI";
+import { deleteCartDataAPI, getCartDetailsAPI } from "../../service/allAPI";
 import Swal from "sweetalert2";
 
 function AdminCart() {
@@ -50,33 +50,44 @@ function AdminCart() {
                                 </h2>
                                 <span className="text-sm text-gray-500">{cart.gmail}</span>
                             </div>
+                            
+                            {/* Delivery Address */}
+                            <div className="items-center justify-between mb-4">
+                                <p className="text-sm text-gray-600 mt-2">
+                                    Address:📍 <span className="font-medium">{cart.deliveryAddress}</span>
+                                </p>
+
+                            </div>
+
 
                             {/* Ordered Items */}
-                            <div className="border-t border-gray-200 pt-4 space-y-3">
-                                {cart.orderedItems?.length > 0 ? (
-                                    cart.orderedItems.map((order, index) => (
-                                        <div
-                                            key={index}
-                                            className="flex items-center justify-between bg-gray-50 rounded-lg p-3"
-                                        >
-                                            <div>
-                                                <p className="font-medium text-gray-800">
-                                                    {order.name}
-                                                </p>
-                                                <p className="text-sm text-gray-500">
-                                                    Qty: {order.quantity} × ₹{order.price}
+                            <div div className="border-t border-gray-200 pt-4 space-y-3" >
+                                {
+                                    cart.orderedItems?.length > 0 ? (
+                                        cart.orderedItems.map((order, index) => (
+                                            <div
+                                                key={index}
+                                                className="flex items-center justify-between bg-gray-50 rounded-lg p-3"
+                                            >
+                                                <div>
+                                                    <p className="font-medium text-gray-800">
+                                                        {order.name}
+                                                    </p>
+                                                    <p className="text-sm text-gray-500">
+                                                        Qty: {order.quantity} × ₹{order.price}
+                                                    </p>
+                                                </div>
+                                                <p className="font-semibold text-teal-600">
+                                                    ₹{order.price * order.quantity}
                                                 </p>
                                             </div>
-                                            <p className="font-semibold text-teal-600">
-                                                ₹{order.price * order.quantity}
-                                            </p>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p className="text-sm text-gray-500 italic text-center">
-                                        No items in this cart
-                                    </p>
-                                )}
+                                        ))
+                                    ) : (
+                                        <p className="text-sm text-gray-500 italic text-center">
+                                            No items in this cart
+                                        </p>
+                                    )
+                                }
                             </div>
 
                             {/* Total Section */}
@@ -93,7 +104,7 @@ function AdminCart() {
 
                             {/* Action Button */}
                             <div className="mt-5 flex justify-end">
-                                <button onClick={()=>handleclearCart(cart.id)} className="px-4 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition">
+                                <button onClick={() => handleclearCart(cart.id)} className="px-4 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition">
                                     Clear Cart
                                 </button>
                             </div>
@@ -103,9 +114,10 @@ function AdminCart() {
                     <p className="text-gray-500 text-center col-span-full">
                         No cart data available.
                     </p>
-                )}
-            </div>
-        </div>
+                )
+                }
+            </div >
+        </div >
     );
 }
 
