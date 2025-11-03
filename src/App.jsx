@@ -14,6 +14,7 @@ import AdminLab from './pages/adminPages/AdminLab'
 import Category from './pages/Category'
 import AdminCart from './pages/adminPages/AdminCart'
 import StoreLocator from './pages/StoreLocator'
+import ProductView from './pages/ProductView'
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <Route path="/cart" element={<Cart/>}/>
       <Route path="/checkout" element={<Checkout/>}/>
       <Route path="/products" element={<Products/>}/>
+      <Route path="/products/:id/productview" element={<ProductView/>}/>
       <Route path="/labtest" element={<LabBooking/>}/>
       <Route path="/category" element={<Category/>}/>
       <Route path="/storelocator" element={<StoreLocator/>}/>
