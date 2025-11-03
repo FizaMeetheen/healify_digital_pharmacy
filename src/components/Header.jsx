@@ -26,13 +26,14 @@ const mainPages = [
 
 
 const subPages = [
-  "Beauty Care",
-  "Sports Nutrition",
+  "Elderly Care",
+  "Cold and Cough Products",
   "Nutrition Supplements",
-  "Home Healthcare",
-  "Mother & Baby Care",
+  "Eye Care Products",
+  "Ayurvedic Products",
+  "Health Care Devices",
+  "Mother and Baby Care",
   "Personal Care",
-  "Medicines",
 ];
 
 // Smooth continuous scrolling animation
@@ -67,6 +68,11 @@ const Header = () => {
     Navigate("/");
   };
 
+
+  const handleCategory = (name) => {
+    Navigate("/category", { state: { category: name } });
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       {/* --- TOP NAVBAR --- */}
@@ -76,7 +82,7 @@ const Header = () => {
           backgroundColor: "white",
           boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
           paddingY: 0.6,
-          paddingRight:0.2
+          paddingRight: 0.2,
         }}
       >
         <Container maxWidth="xl">
@@ -110,7 +116,7 @@ const Header = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 flexGrow: 1,
-                paddingRight:8
+                paddingRight: 8
               }}
             >
               {mainPages.map((page) => (
@@ -167,7 +173,7 @@ const Header = () => {
                       onClick={() => {
                         handleCloseUserMenu();
                         if (setting === "Logout") {
-                          handleLogout(); 
+                          handleLogout();
                         }
                       }}
                     >
@@ -198,7 +204,7 @@ const Header = () => {
       </AppBar>
 
       {/* --- SCROLLING NAVBAR --- */}
-      <Box
+      {/* <Box
         sx={{
           backgroundColor: "#001b73",
           overflow: "hidden",
@@ -241,6 +247,53 @@ const Header = () => {
               ))}
             </Box>
           ))}
+        </Box>
+      </Box> */}
+      <Box
+        sx={{
+          backgroundColor: "#001b73",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          py: 1.2,
+          position: "relative",
+        }}
+      >
+        <Box
+          sx={{
+            display: "inline-flex",
+            animation: `${smoothScroll} 55s linear infinite`,
+            width: "200%",
+          }}
+        >
+          {
+            [...Array(2)].map((_, idx) => (
+              <Box
+                key={idx}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  flex: "1 0 auto",
+                  gap: 10,
+                }}
+              >
+                {subPages.map((item, index) => (
+                  <Typography
+                    key={`${item}-${index}-${idx}`}
+                    onClick={() => handleCategory(item)}
+                    sx={{
+                      color: "white",
+                      fontSize: "15px",
+                      fontWeight: 500,
+                      cursor: "pointer",
+                      transition: "all 0.3s ease",
+                      "&:hover": { textDecoration: "underline", color: "#66ccff" },
+                    }}
+                  >
+                    {item}
+                  </Typography>
+                ))}
+              </Box>
+            ))}
         </Box>
       </Box>
     </Box>
