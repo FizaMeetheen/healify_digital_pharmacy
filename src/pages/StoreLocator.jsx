@@ -139,7 +139,7 @@ const StoreLocator = () => {
                             <iframe
                                 title="Healify Kerala Locations"
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125745.78609833145!2d76.22589149311037!3d9.970864495194213!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d08f976f3a9%3A0xe9cdb444f06ed454!2sErnakulam%2C%20Kerala!5e0!3m2!1sen!2sin!4v1762105412955!5m2!1sen!2sin"
-                                width="500px"
+                                width="100%"
                                 height="100%"
                                 style={{ border: "0", filter: "brightness(0.95)" }}
                                 allowFullScreen
