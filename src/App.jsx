@@ -14,6 +14,7 @@ import AdminLab from './pages/adminPages/AdminLab'
 import Category from './pages/Category'
 import AdminCart from './pages/adminPages/AdminCart'
 import StoreLocator from './pages/StoreLocator'
+import Contact from './pages/Contact'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/home" element={<Home/>}/>
       <Route path="/cart" element={<Cart/>}/>
+      <Route path="/contact" element={<Contact/>}/>
       <Route path="/checkout" element={<Checkout/>}/>
       <Route path="/products" element={<Products/>}/>
       <Route path="/labtest" element={<LabBooking/>}/>
