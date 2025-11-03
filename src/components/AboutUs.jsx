@@ -39,15 +39,13 @@ const AboutUs = () => {
             quickly and reliably.
           </p>
 
-          <p className="text-gray-700 text-lg leading-relaxed mb-6">
+          <p className="text-gray-700 text-lg leading-relaxed mb-6 pb-10">
             With stores established in multiple cities, Healify delivers medicines 
             directly from your <span className="font-medium text-[#0B3C91]">nearest Healify Medicals</span> store — 
             ensuring authentic products, fast delivery, and expert care every time.
           </p>
 
-          <button className="mt-4 bg-[#001B73] hover:bg-[#003399] text-white px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300">
-            Learn More
-          </button>
+          
         </motion.div>
       </div>
     </section>

@@ -47,7 +47,7 @@ const Home = () => {
       if (response?.data) {
         // Shuffle and pick 4 random medicines
         const shuffled = response.data.sort(() => 0.5 - Math.random());
-        setTopMedicines(shuffled.slice(0, 4));
+        setTopMedicines(shuffled.slice(0, 8));
       }
     } catch (error) {
       console.error("Error fetching medicines:", error);
@@ -140,35 +140,6 @@ const Home = () => {
         </motion.section>
 
         {/* TOP SELLING PRODUCTS (Static) */}
-        {/* <section className="py-20 bg-white text-center">
-            <h2 className="text-3xl font-bold text-[#001b73] mb-12">
-              Top Selling Generic Medicines
-            </h2>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-10 px-6 md:px-20">
-              {[1, 2, 3, 4].map((_, i) => (
-                <div
-                  key={i}
-                  className="bg-[#f8faff] shadow-md rounded-xl overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2"
-                >
-                  <img
-                    src={`https://images.unsplash.com/photo-1588776814546-3e8e058f3e3e?random=${i}`}
-                    alt="Medicine"
-                    className="h-44 w-full object-cover brightness-110 hover:brightness-125 transition-all duration-700"
-                  />
-                  <div className="py-4">
-                    <h3 className="font-semibold text-[#001b73]">
-                      Generic Medicine {i + 1}
-                    </h3>
-                    <p className="text-gray-600 text-sm mt-1">For daily wellness</p>
-                    <button className="mt-3 bg-[#001b73] text-white px-5 py-2 rounded-full text-sm hover:bg-[#0033a0] transition-all duration-500">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section> */}
         <section className="py-20 bg-white text-center">
           <h2 className="text-3xl font-bold text-[#001b73] mb-12">
             Top Selling Generic Medicines
@@ -193,7 +164,7 @@ const Home = () => {
                     {medicine.name}
                   </h3>
                   <p className="text-gray-600 text-sm mt-1">
-                    {medicine.description || "For daily wellness"}
+                    {medicine?.usedFor ||""}
                   </p>
                   <button className="mt-3 bg-[#001b73] text-white px-5 py-2 rounded-full text-sm hover:bg-[#0033a0] transition-all duration-500">
                     Add to Cart
