@@ -48,12 +48,10 @@ export const addBokingDetailsAPI =async(reqBody)=>{
 }
 
 
-
-
-
-
-
-
+// add lab booking 
+export const addLabTestAPI = async(reqBody) => {
+    return await commonAPI("POST",`${BASEURL}/labTest_booking`,reqBody)
+}
 
 
 // admin part-------------------------------------------------------

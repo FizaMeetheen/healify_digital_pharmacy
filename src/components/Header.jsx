@@ -24,7 +24,6 @@ const mainPages = [
   { name: "Contact Us", path: "/contact" },
 ];
 
-
 const subPages = [
   "Elderly Care",
   "Cold and Cough Products",
@@ -38,44 +37,33 @@ const subPages = [
 
 // Smooth continuous scrolling animation
 const smoothScroll = keyframes`
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 `;
 
 const Header = () => {
-
-
   const res = JSON.parse(localStorage.getItem("currentUser"));
   const currentUser = res ? res.name : null;
 
-  const settings = [`${currentUser}`, 'Logout'];
-  const [anchorElUser, setAnchorElUser] = useState(null)
+  const settings = [`${currentUser}`, "Logout"];
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleCloseUserMenu = () => setAnchorElUser(null);
 
-  const Navigate = useNavigate()
+  const Navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
     Navigate("/");
   };
 
-
   const handleCategory = (name) => {
     Navigate("/category", { state: { category: name } });
-  }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* --- TOP NAVBAR --- */}
       <AppBar
         position="static"
         sx={{
@@ -83,6 +71,7 @@ const Header = () => {
           boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
           paddingY: 0.6,
           paddingRight: 0.2,
+          zIndex: 1200,
         }}
       >
         <Container maxWidth="xl">
@@ -116,7 +105,7 @@ const Header = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 flexGrow: 1,
-                paddingRight: 8
+                paddingRight: 8,
               }}
             >
               {mainPages.map((page) => (
@@ -140,7 +129,7 @@ const Header = () => {
               ))}
             </Box>
 
-            {/* Right: Icons and Logout */}
+            {/* Right: Icons */}
             <Stack direction="row" spacing={2} alignItems="center">
               <IconButton component={Link} to="/cart">
                 <ShoppingBagOutlinedIcon sx={{ color: "#0d3b66", fontSize: 26 }} />
@@ -152,17 +141,17 @@ const Header = () => {
                   </IconButton>
                 </Tooltip>
                 <Menu
-                  sx={{ mt: '45px' }}
+                  sx={{ mt: "45px" }}
                   id="menu-appbar"
                   anchorEl={anchorElUser}
                   anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+                    vertical: "top",
+                    horizontal: "right",
                   }}
                   keepMounted
                   transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+                    vertical: "top",
+                    horizontal: "right",
                   }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
@@ -172,31 +161,15 @@ const Header = () => {
                       key={index}
                       onClick={() => {
                         handleCloseUserMenu();
-                        if (setting === "Logout") {
-                          handleLogout();
-                        }
+                        if (setting === "Logout") handleLogout();
                       }}
                     >
-                      <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
+                      <Typography sx={{ textAlign: "center" }}>
+                        {setting}
+                      </Typography>
                     </MenuItem>
                   ))}
-
                 </Menu>
-
-
-                {/* <Typography
-                  sx={{
-                    color: "#00aaff",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    textDecoration: "none",
-                    "&:hover": { textDecoration: "underline" },
-                  }}
-                >
-                  <button onClick={handleLogout}>LOG OUT</button>
-
-                </Typography> */}
               </Box>
             </Stack>
           </Toolbar>
@@ -204,13 +177,17 @@ const Header = () => {
       </AppBar>
 
       {/* --- SCROLLING NAVBAR --- */}
-      {/* <Box
+      <Box
         sx={{
           backgroundColor: "#001b73",
           overflow: "hidden",
           whiteSpace: "nowrap",
           py: 1.2,
-          position: "relative",
+          position: "static",
+          top: "70px", 
+          left: 0,
+          width: "100%",
+          zIndex: 1100, 
         }}
       >
         <Box
@@ -227,19 +204,23 @@ const Header = () => {
                 display: "flex",
                 justifyContent: "space-around",
                 flex: "1 0 auto",
-                gap: 6,
+                gap: 10,
               }}
             >
               {subPages.map((item, index) => (
                 <Typography
                   key={`${item}-${index}-${idx}`}
+                  onClick={() => handleCategory(item)}
                   sx={{
                     color: "white",
                     fontSize: "15px",
                     fontWeight: 500,
                     cursor: "pointer",
                     transition: "all 0.3s ease",
-                    "&:hover": { textDecoration: "underline", color: "#66ccff" },
+                    "&:hover": {
+                      textDecoration: "underline",
+                      color: "#66ccff",
+                    },
                   }}
                 >
                   {item}
@@ -247,53 +228,6 @@ const Header = () => {
               ))}
             </Box>
           ))}
-        </Box>
-      </Box> */}
-      <Box
-        sx={{
-          backgroundColor: "#001b73",
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-          py: 1.2,
-          position: "relative",
-        }}
-      >
-        <Box
-          sx={{
-            display: "inline-flex",
-            animation: `${smoothScroll} 55s linear infinite`,
-            width: "200%",
-          }}
-        >
-          {
-            [...Array(2)].map((_, idx) => (
-              <Box
-                key={idx}
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  flex: "1 0 auto",
-                  gap: 10,
-                }}
-              >
-                {subPages.map((item, index) => (
-                  <Typography
-                    key={`${item}-${index}-${idx}`}
-                    onClick={() => handleCategory(item)}
-                    sx={{
-                      color: "white",
-                      fontSize: "15px",
-                      fontWeight: 500,
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                      "&:hover": { textDecoration: "underline", color: "#66ccff" },
-                    }}
-                  >
-                    {item}
-                  </Typography>
-                ))}
-              </Box>
-            ))}
         </Box>
       </Box>
     </Box>

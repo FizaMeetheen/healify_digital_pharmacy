@@ -14,8 +14,8 @@ import AdminLab from './pages/adminPages/AdminLab'
 import Category from './pages/Category'
 import AdminCart from './pages/adminPages/AdminCart'
 import StoreLocator from './pages/StoreLocator'
-import Contact from './pages/Contact'
 import ProductView from './pages/ProductView'
+import Contact from './pages/Contact'
 
 
 function App() {
