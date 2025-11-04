@@ -9,7 +9,7 @@ export default function Contact() {
     <>
       <Header />
       <div className="min-h-screen bg-linear-to-b from-white to-blue-50 flex flex-col items-center py-12 px-6 font-[Poppins]">
-        <h1 className="text-4xl font-semibold text-blue-700 mb-4 text-center">
+        <h1 className="text-4xl font-semibold text-blue-900 mb-4 text-center">
           Contact <span className="text-blue-500">Healify</span>
         </h1>
 
