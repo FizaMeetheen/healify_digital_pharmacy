@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import { deleteAllCartAPI, getCartItemsAPI, updateCartAPI } from '../service/allAPI'
 
+
 function Cart() {
     const [cart, setCart] = useState([])
     const [subtotal, setSubTotal] = useState(0)
@@ -104,7 +105,7 @@ function Cart() {
                                 <div className='flex justify-between'>tax <span className='font-medium'>₹{Math.round(subtotal * 0.05)}</span></div>
                                 <div className='border-t mt-2 pt-2 flex justify-between text-lg font-semibold'>Total <span>₹{Math.ceil(subtotal+subtotal*0.05)}</span></div>
                             </div>
-                            <Link to="/checkout" className='block mt-6 text-center px-6 py-2 rounded bg-blue-900 text-white'>checkout</Link>
+                            <Link to={"/checkout"}  className='block mt-6 text-center px-6 py-2 rounded bg-blue-900 text-white'>CheckOut</Link>
                             <Link to={"/products"} className='block mt-6 text-center px-6 py-2 rounded bg-gray-400'>continue shopping</Link>
                         </div>
                     </div>
