@@ -65,7 +65,7 @@ const Header = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position="fixed"
+        position="static"
         sx={{
           backgroundColor: "white",
           boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
@@ -183,7 +183,7 @@ const Header = () => {
           overflow: "hidden",
           whiteSpace: "nowrap",
           py: 1.2,
-          position: "fixed",
+          position: "static",
           top: "70px", 
           left: 0,
           width: "100%",
@@ -230,9 +230,6 @@ const Header = () => {
           ))}
         </Box>
       </Box>
-
-      {/* Spacer to prevent content overlap */}
-      <Box sx={{ height: "114px" }} />
     </Box>
   );
 };

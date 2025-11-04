@@ -1,12 +1,12 @@
 import React from "react";
-import heroImage from "../assets/heroImage2.png";
+import heroImage from "../assets/heroImage5.png";
 
 const HeroSection = () => {
     return (
         <section
             className="relative w-full h-[80vh] bg-cover bg-center flex items-center justify-start px-10 md:px-20"
             style={{
-                marginTop: "-45px",
+                marginTop: "0",
                 backgroundImage: `url(${heroImage})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
