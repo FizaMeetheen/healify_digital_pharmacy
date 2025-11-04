@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons'
+import { addBokingDetailsAPI, getCartItemsAPI } from '../service/allAPI'
 
 function Checkout() {
   const[userInput, setUserInput] = useState({
@@ -19,6 +20,49 @@ function Checkout() {
     cvc:''
   })
   const [paymentMethod, setPaymentMethod] = useState('cod')
+
+  const handleCheckout = async() =>{
+    const user = JSON.parse(localStorage.getItem("currentUser"))
+    if(!user){
+      alert("please log in to place your order")
+      
+      
+    }
+    try{
+      const response = await getCartItemsAPI(user.id)
+      const userData = response.data
+      const cartItems = userData?.Cart || []
+
+      if(cartItems.length ===0){
+        alert("Your Cart is empty")
+        
+      }
+
+      const bookingDetails = {
+
+        userId: user.id,
+        userName: user.name,
+        gmail: user.gmail,
+        phone: userInput.phone,
+        deliveryAddress: userInput.address,
+        paymentStatus: paymentMethod ==='cod' ? "pending" : "paid",
+        orderedItems: cartItems.map((item)=>({
+          medicineId: item.medicineId,
+          name:item.name,
+          quantity:item.quantity
+        }))
+      }
+      const addResponse = await addBokingDetailsAPI(bookingDetails)
+      alert("Order placed successfully")
+      } catch(error){
+        console.log("error during checkout",error);
+        alert("Something went wrong")
+        
+      }
+
+    }
+  
+
   return (
     <>
       <Header />
@@ -35,32 +79,32 @@ function Checkout() {
               <h2 className='text-xl font-semibold text-gray-800 mb-4'>Billing Address</h2>
               <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-1'>First Name</label>
-                  <input type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
+                  <label  className='block text-sm font-medium text-gray-700 mb-1'>First Name</label>
+                  <input type="text" value={userInput.firstname} onChange={(e)=>setUserInput({...userInput, firstname: e.target.value})} className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
                 </div>
                 <div>
                   <label className='block text-sm font-medium text-gray-700 mb-1'>Last Name</label>
-                  <input type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
+                  <input type="text" value={userInput.lastname}onChange={(e)=>setUserInput({...userInput,lastname:e.target.value})} className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
                 </div>
                 <div className='sm:col-span-2'>
                   <label className='block text-sm font-medium text-gray-700 mb-1'>Address</label>
-                  <input type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
+                  <input value={userInput.address} onChange={(e)=>setUserInput({...userInput,address:e.target.value})} type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
                 </div>
                 <div>
                   <label className='block text-sm font-medium text-gray-700 mb-1'>City</label>
-                  <input type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
+                  <input value={userInput.city} onChange={(e)=>setUserInput({...userInput,city:e.target.value})} type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
                 </div>
                 <div>
                   <label className='block text-sm font-medium text-gray-700 mb-1'>State</label>
-                  <input type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
+                  <input value={userInput.state} onChange={(e)=>setUserInput({...userInput,state:e.target.value})} type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
                 </div>
                 <div>
                   <label className='block text-sm font-medium text-gray-700 mb-1'>Zip Code</label>
-                  <input type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
+                  <input value={userInput.zipcode} onChange={(e)=>setUserInput({...userInput,zipcode:e.target.value})} type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
                 </div>
                 <div>
                   <label className='block text-sm font-medium text-gray-700 mb-1'>Phone</label>
-                  <input type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
+                  <input value={userInput.phone} onChange={(e)=>setUserInput({...userInput,phone:e.target.value})} type="text" className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
                 </div>
               </div>
 
@@ -123,7 +167,7 @@ function Checkout() {
                 </label>
               </div>
               <div className='mt-6'>
-                <Link className='w-full rounded-xl shadow-sm text-white font-semibold py-3 px-4 bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600'>Pay Now</Link>
+                <button onClick={handleCheckout} className='w-full rounded-xl shadow-sm text-white font-semibold py-3 px-4 bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600'>Pay Now</button>
               </div>
             </div>
           </div>

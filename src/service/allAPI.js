@@ -40,6 +40,13 @@ export const deleteAllCartAPI = async(id)=>{
     return await commonAPI("PATCH", `${BASEURL}/user/${id}`,{ Cart: []})
 }
 
+//checkout-----------------------
+
+//add booking details to db
+export const addBokingDetailsAPI =async(reqBody)=>{
+    return await commonAPI("POST",`${BASEURL}/bookings`,reqBody)
+}
+
 
 
 
