@@ -8,8 +8,8 @@ export default function Contact() {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 flex flex-col items-center py-12 px-6 font-[Poppins]">
-        <h1 className="text-4xl font-semibold text-blue-700 mb-4 text-center">
+      <div className="min-h-screen bg-linear-to-b from-white to-blue-50 flex flex-col items-center py-12 px-6 font-[Poppins]">
+        <h1 className="text-4xl font-semibold text-blue-900 mb-4 text-center">
           Contact <span className="text-blue-500">Healify</span>
         </h1>
 
@@ -54,14 +54,14 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-xl w-full transition duration-300"
+              className="bg-radial from-blue-900 to-cyan-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-xl w-full transition duration-300"
             >
               Send Message
             </button>
           </form>
 
           {/* Contact Info */}
-          <div className="bg-blue-600 text-white rounded-2xl shadow-lg p-8 flex flex-col justify-center">
+          <div className="bg-linear-to-b from-blue-900 to-cyan-600 text-white rounded-2xl shadow-lg p-8 flex flex-col justify-center">
             <h2 className="text-2xl font-semibold mb-6">Get in Touch</h2>
 
             <div className="flex items-center mb-5">
