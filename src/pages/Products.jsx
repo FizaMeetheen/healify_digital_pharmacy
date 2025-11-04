@@ -18,6 +18,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Header from "../components/Header";
 import { getMedicineAPI } from "../service/allAPI";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Products() {
   const heights = [50];
@@ -63,6 +64,13 @@ function Products() {
     selectedCategory && selectedCategory != "ALL"
       ? medicines?.filter((item) => item.category === selectedCategory)
       : medicines;
+
+     const navigate=useNavigate()
+      const handleProductClick=(id)=>{
+        
+        navigate(`/products/${id}/productview`)
+        
+      }
 
   return (
     <>
@@ -123,13 +131,14 @@ function Products() {
             {/* Products */}
             <Grid size={10}>
               <div>
-                <Grid container spacing={3}>
+                <Grid container spacing={5}>
                   {filteredMedicines.length > 0 ? (
                     filteredMedicines.map((item) => (
                       <Grid size={4} key={item.id}>
-                        <Card
+                        <Card  onClick={()=>{handleProductClick(item.id)}}
                           sx={{
                             width: 345,
+                            height: 310,
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "space-between",
@@ -143,40 +152,60 @@ function Products() {
                             },
                           }}
                         >
-                          <CardActionArea sx={{ flexGrow: 1 }}>
-                            <CardMedia
-                              component="img"
-                              height="180"
-                              image={item.image}
-                              alt={item.name}
-                              sx={{ objectFit: "cover" }}
-                            />
-                            <CardContent sx={{ flexGrow: 1, minHeight: 130 }}>
+                          <CardActionArea>
+                            <Box
+                              sx={{
+                                height: 160,
+                                width: "100%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                overflow: "hidden",
+                                backgroundColor: "#f8f9fa",
+                              }}
+                            >
+                              <CardMedia
+                                component="img"
+                                height="160"
+                                image={item.image}
+                                alt={item.name}
+                                sx={{
+                                  objectFit: "contain",
+                                  maxHeight: "100%",
+                                  maxWidth: "100%",
+                                }}
+                              />
+                            </Box>
+                            <CardContent sx={{ flexGrow: 1,}}>
                               <Typography
-                                sx={{ ml: 3, color: "#0d47a1" }}
+                                sx={{ color: "#0d47a1",display:"flex",alignItems:"center",justifyContent:"center" }}
                                 gutterBottom
                                 variant="h5"
                                 component="div"
+                                noWrap
                               >
                                 {item.name}
                               </Typography>
                               <Typography
                                 variant="body2"
-                                sx={{ color: "#039be5" }}
+                                sx={{ color: "#039be5",display:"flex",alignItems:"center",justifyContent:"center" }}
                               >
                                 {item.category}
                               </Typography>
                               <Typography
                                 variant="body2"
-                                sx={{ color: "#0d47a1", mt: 1 }}
+                                sx={{ color: "#0d47a1", mt: 1,display:"flex",alignItems:"center",justifyContent:"center" }}
                               >
                                 INR:{item.price}
                               </Typography>
                             </CardContent>
                           </CardActionArea>
-                          <CardActions>
+                          <CardActions sx={{display:"flex",
+                            alignItems:"center",
+                            justifyContent:"center",
+                          }}>
                             <Button
-                              sx={{ ml: 4 }}
+                              sx={{ mb:5 }}
                               size="small"
                               variant="contained"
                             >
