@@ -333,7 +333,7 @@ function Products() {
                       <StyledAccordion sx={{ minHeight: height }}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                           <Typography component="span">
-                            <h2 className="font-bold text-2xl text-sky-600">
+                            <h2 className="font-bold text-xl text-sky-600">
                               Categories
                             </h2>
                           </Typography>

@@ -59,11 +59,16 @@ const Home = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: "easeInOut" } },
   };
 
+  // Product view navigate
+  const productClick=(id)=>{
+    navigate(`/products/${id}/productview`)
+  }
+
   return (
     <>
       <Header />
       <div className="font-[Poppins]">
-        {/* HERO SECTION */}
+
         <HeroSection />
 
         {/* CATEGORIES SECTION */}
@@ -139,7 +144,7 @@ const Home = () => {
           </div>
         </motion.section>
 
-        {/* TOP SELLING PRODUCTS (Static) */}
+        {/* TOP SELLING PRODUCTS */}
         <section className="py-20 bg-white text-center">
           <h2 className="text-3xl font-bold text-[#001b73] mb-12">
             Top Selling Generic Medicines
@@ -148,6 +153,7 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 px-6 md:px-20">
             {topMedicines.map((medicine, i) => (
               <div
+              onClick={()=>productClick(medicine?.id)}
                 key={medicine.id || i}
                 className="bg-[#f8faff] shadow-md rounded-xl overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2"
               >
@@ -166,8 +172,8 @@ const Home = () => {
                   <p className="text-gray-600 text-sm mt-1">
                     {medicine?.usedFor ||""}
                   </p>
-                  <button className="mt-3 bg-[#001b73] text-white px-5 py-2 rounded-full text-sm hover:bg-[#0033a0] transition-all duration-500">
-                    Add to Cart
+                  <button onClick={()=>productClick(medicine.id)} className="mt-3 bg-[#001b73] text-white px-5 py-2 rounded-full text-sm hover:bg-[#0033a0] transition-all duration-500">
+                    View Product
                   </button>
                 </div>
               </div>
@@ -178,7 +184,7 @@ const Home = () => {
         {/* ABOUT US*/}
         <AboutUs />
 
-        {/* CUSTOMER REVIEWS (Static) */}
+        {/* CUSTOMER REVIEWS */}
         <section className="py-20 bg-[#001b73] text-white text-center">
           <h2 className="text-3xl font-bold mb-12">What Our Customers Say</h2>
 

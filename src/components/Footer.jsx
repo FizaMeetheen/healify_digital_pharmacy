@@ -1,6 +1,7 @@
 import React from "react";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import healifyLogo from "../assets/logo.png"; // your logo path
+import { Link } from "react-router-dom";
 
 
 const Footer = () => {
@@ -35,9 +36,9 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-semibold mb-4">Who We Are</h3>
           <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:underline">About Healify</a></li>
-            <li><a href="#" className="hover:underline">Contact Us</a></li>
-            <li><a href="#" className="hover:underline">Store Locator</a></li>
+            <li><Link to={"/home"} href="#" className="hover:underline">About Healify</Link></li>
+            <li><Link to={"/contact"} className="hover:underline">Contact Us</Link></li>
+            <li><Link to={"/storelocator"} className="hover:underline">Store Locator</Link></li>
           </ul>
         </div>
 
@@ -45,10 +46,10 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-semibold mb-4">Navigate</h3>
           <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:underline">Home</a></li>
-            <li><a href="#" className="hover:underline">Cart</a></li>
-            <li><a href="#" className="hover:underline">Medicines</a></li>
-            <li><a href="#" className="hover:underline">Lab Test</a></li>
+            <li><Link to={"/home"} className="hover:underline">Home</Link></li>
+            <li><Link to={"/cart"} className="hover:underline">Cart</Link></li>
+            <li><Link to={"/products"} className="hover:underline">Medicines</Link></li>
+            <li><Link to={"/labtest"} className="hover:underline">Lab Test</Link></li>
           </ul>
         </div>
 
@@ -56,8 +57,8 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-semibold mb-4">Useful Links</h3>
           <ul className="space-y-2 text-sm mb-4">
-            <li><a href="#" className="hover:underline">Browse All Medicines</a></li>
-            <li><a href="#" className="hover:underline">Browse By Category</a></li>
+            <li><Link to={"/products"} className="hover:underline">Browse All Medicines</Link></li>
+            <li><Link to={"/category"} className="hover:underline">Browse By Category</Link></li>
           </ul>
         </div>
       </div>
