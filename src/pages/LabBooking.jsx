@@ -31,7 +31,7 @@ const LabBooking = () => {
     console.log(result);
     Swal.fire({
       title: "Good job!",
-      text: "Medicine added successfully!",
+      text: "Labtest Booked successfully!",
       icon: "success"
     });
     setlabInput({
