@@ -61,7 +61,7 @@ export default function Contact() {
           </form>
 
           {/* Contact Info */}
-          <div className="bg-blue-600 text-white rounded-2xl shadow-lg p-8 flex flex-col justify-center">
+          <div className="bg-blue-800 text-white rounded-2xl shadow-lg p-8 flex flex-col justify-center">
             <h2 className="text-2xl font-semibold mb-6">Get in Touch</h2>
 
             <div className="flex items-center mb-5">
