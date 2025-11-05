@@ -1,5 +1,4 @@
-
-const BASEURL = "https://healify-server-l5ay.onrender.com"
+const BASEURL = "http://localhost:3000"
 
 
 export default BASEURL
