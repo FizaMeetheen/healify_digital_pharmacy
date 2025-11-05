@@ -16,6 +16,7 @@ import AdminCart from './pages/adminPages/AdminCart'
 import StoreLocator from './pages/StoreLocator'
 import ProductView from './pages/ProductView'
 import Contact from './pages/Contact'
+import Pnf from './pages/Pnf'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
     
      <Routes>
       <Route path="/" element={<LandingPage/>}/>
+      <Route path="*" element={<Pnf/>}/>
       <Route path="/register" element={<Register />} />
       <Route path="/home" element={<Home/>}/>
       <Route path="/cart" element={<Cart/>}/>
