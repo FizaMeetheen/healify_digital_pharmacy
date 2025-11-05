@@ -65,7 +65,7 @@ function Cart() {
         <>
             <Header />
             <div className='min-h-screen bg-grey-50'>
-                <div className='w-full bg-linear-to-r from-cyan-300 to-cyan-500 h-50 mb-8 flex justify-center items-center'>
+                <div className='w-full bg-linear-to-r from-cyan-300 to-blue-900 h-50 mb-8 flex justify-center items-center'>
                     <div className='container '>
                         <h1 className='text-center text-5xl  font-bold text-white'>My Cart</h1>
                     </div>
