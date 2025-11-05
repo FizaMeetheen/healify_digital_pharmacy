@@ -1,5 +1,6 @@
 import React from "react";
 import heroImage from "../assets/heroImage2.png";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
     return (
@@ -14,11 +15,12 @@ const HeroSection = () => {
             }}
         >
             <div className="mt-6">
+                <Link to={"/contact"}>
                 <button
                     className="mt-67 ml-38 w-full bg-[#1c4392e7] hover:bg-[#001b73] text-white px-6 py-3 rounded-full font-semibold shadow-md"
                 >
                     Contact Us
-                </button>
+                </button></Link>
             </div>
         </section>
     );

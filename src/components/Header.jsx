@@ -41,7 +41,7 @@ const smoothScroll = keyframes`
   100% { transform: translateX(-50%); }
 `;
 
-const Header = () => {
+const Header = ({search}) => {
   const res = JSON.parse(localStorage.getItem("currentUser"));
   const currentUser = res ? res.name : null;
 
@@ -108,6 +108,7 @@ const Header = () => {
                 paddingRight: 8,
               }}
             >
+             
               {mainPages.map((page) => (
                 <Button
                   key={page.name}
@@ -127,6 +128,11 @@ const Header = () => {
                   {page.name}
                 </Button>
               ))}
+               {
+              search && <Button>
+                <input type="text"  placeholder="SEARCH" className="border rounded-2xl border-sky-700 p-3 text-blue-700"/>
+              </Button>
+              }
             </Box>
 
             {/* Right: Icons */}
