@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
+import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../assets/logo.png";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
@@ -15,6 +16,8 @@ import { keyframes } from "@mui/system";
 import Tooltip from "@mui/material/Tooltip";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Drawer from "@mui/material/Drawer";
+import Divider from "@mui/material/Divider";
 
 const mainPages = [
   { name: "Home", path: "/home" },
@@ -41,16 +44,16 @@ const smoothScroll = keyframes`
   100% { transform: translateX(-50%); }
 `;
 
-const Header = ({search}) => {
+const Header = ({ search }) => {
   const res = JSON.parse(localStorage.getItem("currentUser"));
   const currentUser = res ? res.name : null;
 
   const settings = [`${currentUser}`, "Logout"];
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   const handleCloseUserMenu = () => setAnchorElUser(null);
-
   const Navigate = useNavigate();
 
   const handleLogout = () => {
@@ -69,8 +72,7 @@ const Header = ({search}) => {
         sx={{
           backgroundColor: "white",
           boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
-          paddingY: 0.6,
-          paddingRight: 0.2,
+          py: 0.6,
           zIndex: 1200,
         }}
       >
@@ -89,7 +91,7 @@ const Header = ({search}) => {
                   src={logo}
                   alt="Healify Logo"
                   style={{
-                    width: "220px",
+                    width: "200px",
                     height: "auto",
                     cursor: "pointer",
                   }}
@@ -97,18 +99,17 @@ const Header = ({search}) => {
               </Link>
             </Box>
 
-            {/* Center: Main Navigation */}
+            {/* Center: Desktop Navigation */}
             <Box
               sx={{
-                display: "flex",
+                display: { xs: "none", md: "flex" },
                 gap: 4,
                 justifyContent: "center",
                 alignItems: "center",
                 flexGrow: 1,
-                paddingRight: 8,
+                pr: 4,
               }}
             >
-             
               {mainPages.map((page) => (
                 <Button
                   key={page.name}
@@ -128,72 +129,117 @@ const Header = ({search}) => {
                   {page.name}
                 </Button>
               ))}
-               {
-              search && <Button>
-                <input type="text"  placeholder="SEARCH" className="border rounded-2xl border-sky-700 p-3 text-blue-700"/>
-              </Button>
-              }
+
+              {search && (
+                <input
+                  type="text"
+                  placeholder="SEARCH"
+                  className="border rounded-2xl border-sky-700 p-2 text-blue-700 w-44"
+                />
+              )}
             </Box>
 
             {/* Right: Icons */}
             <Stack direction="row" spacing={2} alignItems="center">
+              {/* Mobile menu button */}
+              <IconButton
+                sx={{ display: { xs: "flex", md: "none" } }}
+                onClick={() => setMobileOpen(true)}
+              >
+                <MenuIcon sx={{ color: "#0d3b66", fontSize: 28 }} />
+              </IconButton>
+
+              {/* Cart */}
               <IconButton component={Link} to="/cart">
                 <ShoppingBagOutlinedIcon sx={{ color: "#0d3b66", fontSize: 26 }} />
               </IconButton>
-              <Box display="flex" alignItems="center" gap={0.8}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <PersonOutlineIcon sx={{ color: "#0d3b66", fontSize: 28 }} />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting, index) => (
-                    <MenuItem
-                      key={index}
-                      onClick={() => {
-                        handleCloseUserMenu();
-                        if (setting === "Logout") handleLogout();
-                      }}
-                    >
-                      <Typography sx={{ textAlign: "center" }}>
-                        {setting}
-                      </Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
+
+              {/* User Menu */}
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <PersonOutlineIcon sx={{ color: "#0d3b66", fontSize: 28 }} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting, index) => (
+                  <MenuItem
+                    key={index}
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      if (setting === "Logout") handleLogout();
+                    }}
+                  >
+                    <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
             </Stack>
           </Toolbar>
         </Container>
       </AppBar>
 
-      {/* --- SCROLLING NAVBAR --- */}
+      {/* Mobile Drawer */}
+      <Drawer
+        anchor="left"
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        sx={{ display: { xs: "block", md: "none" } }}
+      >
+        <Box sx={{ width: 260, p: 2 }}>
+          <Typography variant="h6" sx={{ mb: 2, color: "#0d3b66" }}>
+            Menu
+          </Typography>
+          {mainPages.map((page) => (
+            <MenuItem
+              key={page.name}
+              component={Link}
+              to={page.path}
+              onClick={() => setMobileOpen(false)}
+            >
+              {page.name}
+            </MenuItem>
+          ))}
+          <Divider sx={{ my: 1 }} />
+          <Typography variant="subtitle1" sx={{ color: "#0d3b66", mb: 1 }}>
+            Categories
+          </Typography>
+          {subPages.map((item, index) => (
+            <MenuItem
+              key={index}
+              onClick={() => {
+                handleCategory(item);
+                setMobileOpen(false);
+              }}
+            >
+              {item}
+            </MenuItem>
+          ))}
+        </Box>
+      </Drawer>
+
+      {/* Scrolling category bar (Desktop only) */}
       <Box
         sx={{
           backgroundColor: "#001b73",
           overflow: "hidden",
           whiteSpace: "nowrap",
           py: 1.2,
-          position: "static",
-          top: "70px", 
-          left: 0,
-          width: "100%",
-          zIndex: 1100, 
+          display: { xs: "none", md: "block" },
         }}
       >
         <Box
