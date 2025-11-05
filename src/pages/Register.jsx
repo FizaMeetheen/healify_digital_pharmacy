@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUserAPI } from "../service/allAPI";
 import axios from "axios";
 import Swal from "sweetalert2";
+import BASEURL from "../service/serverURL";
 
 const FloatingIcon = ({ Icon, xStart, yStart, size, delay }) => (
   <motion.div
@@ -31,6 +32,7 @@ const FloatingIcon = ({ Icon, xStart, yStart, size, delay }) => (
 );
 
 const Register = () => {
+  const baseURL= BASEURL
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -62,8 +64,8 @@ const Register = () => {
     }
 
     try {
-      const res = await axios.get(`http://localhost:3000/user?phone=${phone}`);
-      if (res.data.length > 0) {
+      const res = await axios.get(`${baseURL}/user?phone=${phone}`);
+      if (res.data.length > 0){
         Swal.fire({
           icon: "error",
           title: "Oops...",
