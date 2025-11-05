@@ -1,28 +1,26 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMedicineAPI } from '../service/allAPI';
+import { getCartItemsAPI, getMedicineAPI, updateCartAPI } from '../service/allAPI';
 import { Button, IconButton } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import Header from '../components/Header';
+import Swal from "sweetalert2";
 
 
 function ProductView() {
    const {id}=useParams()
 
 const [Medicine, setMedicine] = useState(null);
+const [quantity, setQuantity] = useState(1)
 
 const fetchMedicine= async()=>{
     try{
         const result= await getMedicineAPI();
         if(result.status>=200 && result.status<300){
             const found =result.data.find(item=>item.id ==id)
-            setMedicine(found)
-            
-            
-            
-            
+            setMedicine(found)     
         }
 
     }catch(err){
@@ -35,6 +33,63 @@ const fetchMedicine= async()=>{
     useEffect(() => {
         fetchMedicine()       
     }, []);
+
+    const decreaseQuantity = () => {
+      setQuantity((prev)=>(prev>1 ? prev-1 : 1))
+    }
+
+    const increaseQuantity = () => {
+      setQuantity((prev)=> prev+1)
+    }
+
+    const handleAddToCart = async (product) => {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+        const userId = currentUser.id
+        if (!userId) {
+          Swal.fire({
+            icon: "warning",
+            title: "Please login first",
+            text: "You need to login to add items to the cart.",
+          });
+        }
+        try{
+          const res = await getCartItemsAPI(userId)
+          const existingCart = res.data.Cart || []
+    
+          const existingItem = existingCart.find((item)=>item.medicineId === product.id)
+    
+          let updatedCart 
+          if(existingItem){
+            updatedCart = existingCart.map((item)=> item.medicineId === product.id ? {...item, quantity: item.quantity+quantity} : item
+            )
+          } else{
+            const newItem = {
+              medicineId: product.id,
+              name: product.name,
+              price: product.price,
+              image: product.image,
+              brand: product.brand,
+              quantity: quantity
+            }
+            updatedCart = [...existingCart, newItem]
+            Swal.fire({
+            icon: "success",
+            title: "Added to Cart",
+            text: `${product.name} added to cart.`,
+            showConfirmButton: false,
+          });
+          }
+          await updateCartAPI(userId, updatedCart)
+        } catch(error){
+          console.log("error adding to cart:",error);
+          Swal.fire({
+          icon: "error",
+          title: "Something went wrong",
+          text: "Unable to update cart. Please try again later.",
+        });
+          
+        }
+      }
 
   return (
     <>
@@ -113,11 +168,11 @@ const fetchMedicine= async()=>{
             
        
             <div className="flex items-center  rounded-lg shadow-sm px-2">
-              <IconButton>
+              <IconButton onClick={decreaseQuantity}>
                 <RemoveIcon />
               </IconButton>
-              <span className="px-3 font-medium">1</span>
-              <IconButton>
+              <span className="px-3 font-medium">{quantity}</span>
+              <IconButton onClick={increaseQuantity}>
                 <AddIcon />
               </IconButton>
             </div>
@@ -132,6 +187,7 @@ const fetchMedicine= async()=>{
                 textTransform: "none"
               }}
               className="flex-1"
+              onClick={(e)=>handleAddToCart(Medicine)}
             >
               🛒 Add To Cart
             </Button>

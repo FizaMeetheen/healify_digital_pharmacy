@@ -94,8 +94,8 @@ function Checkout() {
   }
 
   const subtotal = cartItems.reduce((total,item)=> total + (item.price * item.quantity),0)
-  const tax = Math.round(subtotal * 0.05)
-  const grandTotal = subtotal + tax
+  const tax = Math.ceil(subtotal * 0.05)
+  const grandTotal = Math.ceil(subtotal + tax)
 
 
   return (
@@ -115,7 +115,7 @@ function Checkout() {
               <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                 <div>
                   <label className='block text-sm font-medium text-gray-700 mb-1'>First Name</label>
-                  <input type="text" value={userInput.firstname} onChange={(e) => setUserInput({ ...userInput, firstname: e.target.value })} className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
+                  <input  type="text" value={userInput.firstname} onChange={(e) => setUserInput({ ...userInput, firstname: e.target.value })} className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400' />
                 </div>
                 <div>
                   <label className='block text-sm font-medium text-gray-700 mb-1'>Last Name</label>

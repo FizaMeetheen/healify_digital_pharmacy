@@ -27,9 +27,10 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Header from "../components/Header";
-import { getMedicineAPI } from "../service/allAPI";
+import {  getMedicineAPI } from "../service/allAPI";
 import { Link, useNavigate } from "react-router-dom";
 import { keyframes } from "@mui/system";
+
 
 
 const mainPages = [
@@ -58,26 +59,26 @@ const smoothScroll = keyframes`
 `;
 
 function Products() {
-   const res = JSON.parse(localStorage.getItem("currentUser"));
-    const currentUser = res ? res.name : null;
-  
-    const settings = [`${currentUser}`, "Logout"];
-    const [anchorElUser, setAnchorElUser] = useState(null);
-  
-    const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
-    const handleCloseUserMenu = () => setAnchorElUser(null);
-  
-    const Navigate = useNavigate();
-  
-    const handleLogout = () => {
-      localStorage.removeItem("currentUser");
-      Navigate("/");
-    };
-  
-    const handleCategory = (name) => {
-      Navigate("/category", { state: { category: name } });
-    };
-  
+  const res = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = res ? res.name : null;
+
+  const settings = [`${currentUser}`, "Logout"];
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleCloseUserMenu = () => setAnchorElUser(null);
+
+  const Navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    Navigate("/");
+  };
+
+  const handleCategory = (name) => {
+    Navigate("/category", { state: { category: name } });
+  };
+
   const heights = [50];
 
   const [medicines, setmedicines] = useState([]);
@@ -118,15 +119,15 @@ function Products() {
     }),
   }));
 
-const filteredMedicines = medicines
-  ?.filter((item) =>
-    selectedCategory && selectedCategory !== "ALL"
-      ? item.category === selectedCategory
-      : true
-  )
-  ?.filter((item) =>
-    item.name.toLowerCase().includes(SearchData.toLowerCase())
-  );
+  const filteredMedicines = medicines
+    ?.filter((item) =>
+      selectedCategory && selectedCategory !== "ALL"
+        ? item.category === selectedCategory
+        : true
+    )
+    ?.filter((item) =>
+      item.name.toLowerCase().includes(SearchData.toLowerCase())
+    );
 
   const navigate = useNavigate();
   const handleProductClick = (id) => {
@@ -135,183 +136,185 @@ const filteredMedicines = medicines
 
   
 
+
+
   return (
     <>
-       <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          backgroundColor: "white",
-          boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
-          paddingY: 0.6,
-          paddingRight: 0.2,
-          zIndex: 1200,
-        }}
-      >
-        <Container maxWidth="xl">
-          <Toolbar
-            disableGutters
-            sx={{
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Link to="/home">
-                <img
-                  src={logo}
-                  alt="Healify Logo"
-                  style={{
-                    width: "220px",
-                    height: "auto",
-                    cursor: "pointer",
-                  }}
-                />
-              </Link>
-            </Box>
-
-           
-            <Box
-              sx={{
-                display: "flex",
-                gap: 4,
-                justifyContent: "center",
-                alignItems: "center",
-                flexGrow: 1,
-                paddingRight: 8,
-              }}
-            >
-             
-              {mainPages.map((page) => (
-                <Button
-                  key={page.name}
-                  component={Link}
-                  to={page.path}
-                  sx={{
-                    color: "black",
-                    fontWeight: 500,
-                    fontSize: "15px",
-                    textTransform: "none",
-                    "&:hover": {
-                      color: "#0077b6",
-                      backgroundColor: "transparent",
-                    },
-                  }}
-                >
-                  {page.name}
-                </Button>
-              ))}
-               <Button>
-                <input onChange={(e)=>{setSearchData(e.target.value)}} type="text"  placeholder="SEARCH" className="border rounded-2xl border-sky-700 p-3 text-blue-700"/>
-              </Button>
-              
-            </Box>
-
-            {/* Right: Icons */}
-            <Stack direction="row" spacing={2} alignItems="center">
-              <IconButton component={Link} to="/cart">
-                <ShoppingBagOutlinedIcon sx={{ color: "#0d3b66", fontSize: 26 }} />
-              </IconButton>
-              <Box display="flex" alignItems="center" gap={0.8}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <PersonOutlineIcon sx={{ color: "#0d3b66", fontSize: 28 }} />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting, index) => (
-                    <MenuItem
-                      key={index}
-                      onClick={() => {
-                        handleCloseUserMenu();
-                        if (setting === "Logout") handleLogout();
-                      }}
-                    >
-                      <Typography sx={{ textAlign: "center" }}>
-                        {setting}
-                      </Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
-            </Stack>
-          </Toolbar>
-        </Container>
-      </AppBar>
-
-      {/* --- SCROLLING NAVBAR --- */}
-      <Box
-        sx={{
-          backgroundColor: "#001b73",
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-          py: 1.2,
-          position: "fixed",
-          top: "70px", 
-          left: 0,
-          width: "100%",
-          zIndex: 1100, 
-        }}
-      >
-        <Box
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar
+          position="fixed"
           sx={{
-            display: "inline-flex",
-            animation: `${smoothScroll} 55s linear infinite`,
-            width: "200%",
+            backgroundColor: "white",
+            boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
+            paddingY: 0.6,
+            paddingRight: 0.2,
+            zIndex: 1200,
           }}
         >
-          {[...Array(2)].map((_, idx) => (
-            <Box
-              key={idx}
+          <Container maxWidth="xl">
+            <Toolbar
+              disableGutters
               sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                flex: "1 0 auto",
-                gap: 10,
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              {subPages.map((item, index) => (
-                <Typography
-                  key={`${item}-${index}-${idx}`}
-                  onClick={() => handleCategory(item)}
-                  sx={{
-                    color: "white",
-                    fontSize: "15px",
-                    fontWeight: 500,
-                    cursor: "pointer",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      textDecoration: "underline",
-                      color: "#66ccff",
-                    },
-                  }}
-                >
-                  {item}
-                </Typography>
-              ))}
-            </Box>
-          ))}
-        </Box>
-      </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Link to="/home">
+                  <img
+                    src={logo}
+                    alt="Healify Logo"
+                    style={{
+                      width: "220px",
+                      height: "auto",
+                      cursor: "pointer",
+                    }}
+                  />
+                </Link>
+              </Box>
 
-      {/* Spacer to prevent content overlap */}
-      <Box sx={{ height: "114px" }} />
-    </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 4,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexGrow: 1,
+                  paddingRight: 8,
+                }}
+              >
+
+                {mainPages.map((page) => (
+                  <Button
+                    key={page.name}
+                    component={Link}
+                    to={page.path}
+                    sx={{
+                      color: "black",
+                      fontWeight: 500,
+                      fontSize: "15px",
+                      textTransform: "none",
+                      "&:hover": {
+                        color: "#0077b6",
+                        backgroundColor: "transparent",
+                      },
+                    }}
+                  >
+                    {page.name}
+                  </Button>
+                ))}
+                <Button>
+                  <input onChange={(e) => { setSearchData(e.target.value) }} type="text" placeholder="SEARCH" className="border rounded-2xl border-sky-700 p-3 text-blue-700" />
+                </Button>
+
+              </Box>
+
+              {/* Right: Icons */}
+              <Stack direction="row" spacing={2} alignItems="center">
+                <IconButton component={Link} to="/cart">
+                  <ShoppingBagOutlinedIcon sx={{ color: "#0d3b66", fontSize: 26 }} />
+                </IconButton>
+                <Box display="flex" alignItems="center" gap={0.8}>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <PersonOutlineIcon sx={{ color: "#0d3b66", fontSize: 28 }} />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting, index) => (
+                      <MenuItem
+                        key={index}
+                        onClick={() => {
+                          handleCloseUserMenu();
+                          if (setting === "Logout") handleLogout();
+                        }}
+                      >
+                        <Typography sx={{ textAlign: "center" }}>
+                          {setting}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              </Stack>
+            </Toolbar>
+          </Container>
+        </AppBar>
+
+        {/* --- SCROLLING NAVBAR --- */}
+        <Box
+          sx={{
+            backgroundColor: "#001b73",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            py: 1.2,
+            position: "fixed",
+            top: "70px",
+            left: 0,
+            width: "100%",
+            zIndex: 1100,
+          }}
+        >
+          <Box
+            sx={{
+              display: "inline-flex",
+              animation: `${smoothScroll} 55s linear infinite`,
+              width: "200%",
+            }}
+          >
+            {[...Array(2)].map((_, idx) => (
+              <Box
+                key={idx}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  flex: "1 0 auto",
+                  gap: 10,
+                }}
+              >
+                {subPages.map((item, index) => (
+                  <Typography
+                    key={`${item}-${index}-${idx}`}
+                    onClick={() => handleCategory(item)}
+                    sx={{
+                      color: "white",
+                      fontSize: "15px",
+                      fontWeight: 500,
+                      cursor: "pointer",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        textDecoration: "underline",
+                        color: "#66ccff",
+                      },
+                    }}
+                  >
+                    {item}
+                  </Typography>
+                ))}
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        {/* Spacer to prevent content overlap */}
+        <Box sx={{ height: "114px" }} />
+      </Box>
       <div>
         <div className="w-full shadow-2xl h-70 bg-radial from-cyan-300 to-cyan-500 flex justify-center items-center">
           <h1 className="text-5xl font-bold text-white">Products</h1>
@@ -338,11 +341,10 @@ const filteredMedicines = medicines
 
                         <AccordionDetails>
                           <h4
-                            className={`font-bold ms-2 mt-3 cursor-pointer ${
-                              selectedCategory === null
+                            className={`font-bold ms-2 mt-3 cursor-pointer ${selectedCategory === null
                                 ? "text-sky-600"
                                 : "text-gray-600"
-                            }`}
+                              }`}
                             onClick={() => setselectedCategory(null)}
                           >
                             All
@@ -351,11 +353,10 @@ const filteredMedicines = medicines
                           {categories.map((item, index) => (
                             <h4
                               key={index}
-                              className={`font-bold ms-2 mt-3 cursor-pointer ${
-                                selectedCategory === item
+                              className={`font-bold ms-2 mt-3 cursor-pointer ${selectedCategory === item
                                   ? "text-sky-600"
                                   : "text-gray-600"
-                              }`}
+                                }`}
                               onClick={() => setselectedCategory(item)}
                             >
                               {item}
@@ -476,14 +477,14 @@ const filteredMedicines = medicines
                               size="small"
                               variant="contained"
                             >
-                              ADD TO CART
+                              Product View
                             </Button>
                           </CardActions>
                         </Card>
                       </Grid>
                     ))
                   ) : (
-                    <Typography  sx={{ ml: 2, mt: 2,display:"flex",justifyContent:"center",alignItems:"center",fontSize:"30px" }}>
+                    <Typography sx={{ ml: 2, mt: 2, display: "flex", justifyContent: "center", alignItems: "center", fontSize: "30px" }}>
                       No Medicines Found
                     </Typography>
                   )}
